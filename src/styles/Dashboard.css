@@ -1,0 +1,937 @@
+/* ============================================
+   AuraVue Dashboard — Premium Command Center
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* --- Base --- */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #050a0f;
+  color: #e8f4f8;
+  overflow-x: hidden;
+}
+
+/* --- Dashboard Shell --- */
+.dashboard-v2 {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 90% 60% at 10% -10%, rgba(0, 230, 230, 0.11) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 110%, rgba(0, 100, 200, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0, 30, 60, 0.4) 0%, transparent 100%),
+    #050a0f;
+  padding: 4.5rem 1.5rem 1.5rem;
+  animation: dashboardIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes dashboardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   TOP STATUS BAR
+   ============================================ */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 230, 230, 0.1);
+  border-radius: 20px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 230, 230, 0.4), transparent);
+}
+
+.top-bar h1 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #e8f4f8;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.top-bar h1::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00e6e6;
+  box-shadow: 0 0 10px #00e6e6;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.monitor-btn {
+  padding: 0.6rem 1.4rem;
+  background: linear-gradient(135deg, rgba(0, 230, 230, 0.15), rgba(0, 140, 180, 0.15));
+  border: 1px solid rgba(0, 230, 230, 0.3);
+  border-radius: 30px;
+  color: #00e6e6;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  backdrop-filter: blur(10px);
+}
+
+.monitor-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 230, 230, 0.25), rgba(0, 140, 180, 0.25));
+  box-shadow: 0 0 20px rgba(0, 230, 230, 0.2);
+  transform: translateY(-1px);
+}
+
+.notif-bell {
+  font-size: 1.4rem;
+  color: rgba(0, 230, 230, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notif-bell:hover {
+  color: #00e6e6;
+  transform: rotate(15deg) scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(0, 230, 230, 0.6));
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: 70px;
+  right: 2rem;
+  background: rgba(10, 20, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 230, 230, 0.15);
+  border-radius: 16px;
+  padding: 1rem;
+  min-width: 240px;
+  z-index: 100;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.notif-dropdown p {
+  margin: 0;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.85rem;
+  color: #b0c8d0;
+}
+
+.notif-dropdown p:last-child {
+  border-bottom: none;
+}
+
+/* ============================================
+   BENTO GRID LAYOUT
+   ============================================ */
+.dashboard-bento {
+  display: grid;
+  grid-template-columns: 280px 1fr 280px;
+  grid-template-rows: min-content min-content min-content;
+  gap: 1rem;
+  align-items: start;
+  align-content: start;
+}
+
+/* ============================================
+   GLASS CARD BASE
+   ============================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 230, 230, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 230, 230, 0.05);
+  transform: translateY(-2px);
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 230, 230, 0.3), transparent);
+  pointer-events: none;
+}
+
+/* ============================================
+   PATIENT SIDEBAR (Left)
+   ============================================ */
+.patient-sidebar {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.avatar-ring {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+}
+
+.avatar-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #00e6e6, #005580) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: ringRotate 4s linear infinite;
+}
+
+@keyframes ringRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.patient-name {
+  text-align: center;
+  margin: 0;
+}
+
+.patient-name h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+  color: #fff;
+}
+
+.patient-name p {
+  font-size: 0.78rem;
+  color: rgba(0, 230, 230, 0.7);
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(0, 200, 83, 0.1);
+  border: 1px solid rgba(0, 200, 83, 0.2);
+  color: #00c853;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00c853;
+  animation: blink 1.5s infinite;
+}
+
+.sidebar-logs {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.sidebar-logs h4 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 0.8rem;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.82rem;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-item span:first-child {
+  color: #8ba8b5;
+}
+
+.log-item span:last-child {
+  color: #fff;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ============================================
+   HERO PULSE CARD (Center-Top)
+   ============================================ */
+.hero-pulse-card {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  background: rgba(0, 230, 230, 0.03);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Heartbeat Ring */
+.pulse-ring-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+.pulse-ring:nth-child(1) {
+  background: rgba(0, 230, 230, 0.12);
+  animation-delay: 0s;
+}
+
+.pulse-ring:nth-child(2) {
+  background: rgba(0, 230, 230, 0.08);
+  animation-delay: 0.4s;
+}
+
+.pulse-ring:nth-child(3) {
+  background: rgba(0, 230, 230, 0.04);
+  animation-delay: 0.8s;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.pulse-core {
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(0, 230, 230, 0.4), rgba(0, 100, 140, 0.8));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 230, 230, 0.4);
+  box-shadow: 0 0 40px rgba(0, 230, 230, 0.3), inset 0 0 30px rgba(0, 230, 230, 0.1);
+}
+
+.pulse-bpm {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pulse-unit {
+  font-size: 0.65rem;
+  color: rgba(0, 230, 230, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 0.15rem;
+}
+
+.pulse-info {
+  flex: 1;
+}
+
+.pulse-info h2 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 0.5rem;
+}
+
+.pulse-status-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: #fff;
+}
+
+.pulse-subtext {
+  font-size: 0.85rem;
+  color: #8ba8b5;
+  margin: 0 0 1.2rem;
+}
+
+.pulse-range {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.range-tag {
+  font-size: 0.72rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.range-tag.normal {
+  background: rgba(0, 200, 83, 0.12);
+  color: #00c853;
+  border: 1px solid rgba(0, 200, 83, 0.2);
+}
+
+.range-tag.warning {
+  background: rgba(255, 165, 0, 0.12);
+  color: #fca311;
+  border: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+.range-tag.danger {
+  background: rgba(255, 59, 59, 0.12);
+  color: #ff3b3b;
+  border: 1px solid rgba(255, 59, 59, 0.2);
+}
+
+/* ============================================
+   VITAL STATS ROW (Center-Middle)
+   ============================================ */
+.vitals-row {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 0 0 24px 24px;
+  transition: opacity 0.3s;
+  opacity: 0.6;
+}
+
+.stat-card.pulse-card::after {
+  background: linear-gradient(90deg, transparent, #00e6e6, transparent);
+}
+
+.stat-card.temp-card::after {
+  background: linear-gradient(90deg, transparent, #ff9f40, transparent);
+}
+
+.stat-card.bp-card::after {
+  background: linear-gradient(90deg, transparent, #c87eff, transparent);
+}
+
+.stat-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8ba8b5;
+  margin: 0 0 0.3rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+}
+
+.stat-unit {
+  font-size: 0.75rem;
+  color: #8ba8b5;
+  margin: 0.2rem 0 0;
+}
+
+/* ============================================
+   CHART PANEL (Center-Bottom)
+   ============================================ */
+.chart-panel {
+  grid-column: 2;
+  grid-row: 3;
+  padding: 1.5rem 2rem;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.chart-panel h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chart-panel h3::after {
+  content: 'LIVE';
+  font-size: 0.6rem;
+  background: rgba(0, 200, 83, 0.15);
+  border: 1px solid rgba(0, 200, 83, 0.25);
+  color: #00c853;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+}
+
+.chart-wrapper {
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ============================================
+   AI STATUS SIDEBAR (Right)
+   ============================================ */
+.ai-sidebar {
+  grid-column: 3;
+  grid-row: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* AI Brain Card */
+.ai-card {
+  padding: 1.5rem;
+  background: rgba(0, 230, 230, 0.04);
+}
+
+.ai-card-header {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ai-status-main {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #00c853;
+  margin: 0 0 0.3rem;
+}
+
+.ai-status-sub {
+  font-size: 0.78rem;
+  color: #8ba8b5;
+  margin: 0;
+}
+
+.ai-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.ai-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.ai-metric-label {
+  color: #8ba8b5;
+  flex: 1;
+}
+
+.ai-metric-bar {
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ai-metric-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #00e6e6, #00b8b8);
+}
+
+.ai-metric-val {
+  color: #fff;
+  font-weight: 600;
+  min-width: 2.5rem;
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+}
+
+/* Quick Actions */
+.quick-actions {
+  padding: 1.5rem;
+}
+
+.quick-actions h4 {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 1rem;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  color: #e8f4f8;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.6rem;
+  font-family: 'Poppins', sans-serif;
+  text-align: left;
+}
+
+.action-btn:last-child {
+  margin-bottom: 0;
+}
+
+.action-btn:hover {
+  background: rgba(0, 230, 230, 0.08);
+  border-color: rgba(0, 230, 230, 0.2);
+  transform: translateX(4px);
+}
+
+.action-btn .action-icon {
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 230, 230, 0.1);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.action-btn.emergency {
+  background: rgba(255, 59, 59, 0.08);
+  border-color: rgba(255, 59, 59, 0.2);
+  color: #ff3b3b;
+}
+
+.action-btn.emergency:hover {
+  background: rgba(255, 59, 59, 0.15);
+}
+
+.action-btn.emergency .action-icon {
+  background: rgba(255, 59, 59, 0.15);
+}
+
+/* Alerts Panel */
+.alerts-panel {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.alerts-panel h4 {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 0.8rem;
+}
+
+.alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.8rem;
+}
+
+.alert-item:last-child {
+  border-bottom: none;
+}
+
+.alert-item span {
+  color: #8ba8b5;
+  line-height: 1.4;
+}
+
+/* ============================================
+   MAP SECTION (Full Width Bottom)
+   ============================================ */
+.map-full {
+  grid-column: 1 / -1;
+  padding: 1.5rem 2rem;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.map-full h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0, 230, 230, 0.6);
+  margin: 0 0 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 240px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* ============================================
+   OLD CLASSES (kept for backward compat)
+   ============================================ */
+.dashboard-layout {
+  display: none;
+}
+
+.left-panel,
+.middle-panel,
+.right-panel {
+  display: none;
+}
+
+.map-panel {
+  display: none;
+}
+
+.vital-summary {
+  display: none;
+}
+
+.vital-box {
+  display: none;
+}
+
+.circle-pulse {
+  display: none;
+}
+
+.snap-tiles {
+  display: none;
+}
+
+.tile {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1100px) {
+  .dashboard-bento {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .patient-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .ai-sidebar {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .hero-pulse-card {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .vitals-row {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
+  .chart-panel {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+
+  .map-full {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-sidebar,
+  .ai-sidebar,
+  .hero-pulse-card,
+  .vitals-row,
+  .chart-panel,
+  .map-full {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .vitals-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-pulse-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .dashboard-v2 {
+    padding: 5rem 1rem 1rem;
+  }
+}

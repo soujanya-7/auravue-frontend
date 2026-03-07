@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://auravue-c8b99.web.app/sitemap.xml
