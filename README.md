@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# 🌌 AuraVue — AI-Powered Elderly Health Monitoring
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+AuraVue is an intelligent, high-end health monitoring platform designed to provide safety and independence for elderly individuals living alone. By combining IoT sensor data with advanced AI prediction models, AuraVue detects vital anomalies and falls in real-time, ensuring immediate caregiver response.
 
-## Available Scripts
+[![Production Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen)](https://github.com/soujanya-7/auravue-frontend)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **🧠 AI Vital Monitoring**: Continuous analysis of pulse and heart rate variability (HRV) to predict potential health crises before they occur.
+- **🚨 Instant SOS System**: A high-priority alert system that triggers automated notifications to caregivers, including GPS location and live camera feeds.
+- **🛡️ Fall Detection**: Leverages accelerometer data and AI to identify falls with high precision and low latency (<3s).
+- **💊 Medication Management**: Cloud-synced reminder system ensuring strict adherence to medical schedules.
+- **👨‍👩‍👧‍👦 Family Circle**: Multi-caregiver access allows an entire family to stay connected and informed about their loved one's status.
+- **📈 Health Insights**: Comprehensive weekly analytics and trend reports for medical review and long-term health tracking.
+- **🔐 Privacy First**: End-to-end encryption and HIPAA-compliant data handling practices.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ Technology Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Frontend**: React.js with a modern Glassmorphic UI/UX.
+- **State Management**: React Hooks & Context API.
+- **Backend/Database**: Firebase (Firestore, Authentication, Cloud Messaging).
+- **Visualizations**: Chart.js for health analytics.
+- **Maps**: React-Leaflet for real-time GPS tracking.
+- **Icons**: React Icons (Fa, Md, Io).
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- A Firebase project configured.
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/soujanya-7/auravue-frontend.git
+    cd auravue-frontend
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2.  **Install Dependencies**:
+    ```bash
+    npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3.  **Configure Environment**:
+    Create a `.env` file in the root directory and add your Firebase configuration:
+    ```env
+    REACT_APP_FIREBASE_API_KEY=your_api_key
+    REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+    REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+    ... (add other Firebase keys)
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4.  **Run Locally**:
+    ```bash
+    npm start
+    ```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📦 Production Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To create a production-optimized build:
 
-### Code Splitting
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This will generate a `build/` folder ready for hosting on Firebase Hosting, Vercel, or Netlify.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 👥 Contributors
 
-### Making a Progressive Web App
+- **Soujanya S** — Project Lead & Developer
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Built with ❤️ for elderly safety.
