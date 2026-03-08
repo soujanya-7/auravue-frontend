@@ -299,12 +299,7 @@ function Home() {
           <div className="footer-brand">
             <h3>AuraVue</h3>
             <p>AI-powered health monitoring system designed to protect elderly individuals living independently, ensuring safety through intelligent prediction and real-time caregiver connectivity.</p>
-            <div className="footer-socials">
-              <a href="https://twitter.com/auravue" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">𝕏</a>
-              <a href="https://linkedin.com/company/auravue" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link">in</a>
-              <a href="https://github.com/auravue" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link">⌨</a>
-              <a href="mailto:support@auravue.health" aria-label="Email" className="social-link">✉</a>
-            </div>
+            
           </div>
           <div className="footer-col">
             <h4>Product</h4>
@@ -323,7 +318,7 @@ function Home() {
           <div className="footer-col">
             <h4>Contact</h4>
             <p className="footer-contact-item">📧 support@auravue.health</p>
-            <p className="footer-contact-item">📞 +1 (800) AURAVUE</p>
+            <p className="footer-contact-item">📞 +91 86105 31594</p>
             <p className="footer-contact-item">📍 India</p>
           </div>
         </div>

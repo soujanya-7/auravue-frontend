@@ -386,7 +386,7 @@
 /* 🚀 FULL-SCREEN Hero */
 /* ===================== */
 .hero {
-  min-height: 90vh;
+  min-height: 80vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -809,7 +809,7 @@
 /* 📊 Stats Section */
 /* ===================== */
 .stats-section {
-  padding: 5rem 2rem;
+  padding: 4rem 2rem;
   background: rgba(0, 230, 230, 0.03);
   border-top: 1px solid rgba(0, 230, 230, 0.06);
   border-bottom: 1px solid rgba(0, 230, 230, 0.06);
@@ -889,7 +889,7 @@
 /* 🔴 Problem Section */
 /* ===================== */
 .problem-section {
-  padding: 7rem 2rem;
+  padding: 5rem 2rem;
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -956,7 +956,7 @@
 /* ===================== */
 .features {
   text-align: center;
-  padding: 7rem 3rem;
+  padding: 5rem 3rem;
   background: rgba(255, 255, 255, 0.02);
   position: relative;
 }
@@ -1090,7 +1090,7 @@
 /* ===================== */
 .how-it-works {
   background: linear-gradient(120deg, #08141f, #112534);
-  padding: 7rem 2rem;
+  padding: 5rem 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1225,7 +1225,7 @@
 
 .cta h2 {
   font-size: 2.8rem;
-  color: #fff;
+  color: #00e6e6;
   margin-bottom: 1.2rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -1730,11 +1730,11 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8rem 6rem;
-  gap: 6rem;
+  padding: 2rem 2rem;
+  gap: 4rem;
   max-width: 1400px;
   margin: 0 auto;
-  min-height: 85vh;
+  min-height: 60vh;
   position: relative;
   z-index: 2;
 }
@@ -1768,8 +1768,8 @@ footer {
 /* --- Stats Row --- */
 .stats-grid-minimal {
   display: flex;
-  gap: 4rem;
-  margin-top: 3rem;
+  gap: 3rem;
+  margin-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding-top: 2.5rem;
 }
@@ -1940,9 +1940,9 @@ footer {
 @media (max-width: 1100px) {
   .hub-section {
     flex-direction: column;
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
     text-align: center;
-    gap: 4rem;
+    gap: 3rem;
   }
 
   .hub-content {
