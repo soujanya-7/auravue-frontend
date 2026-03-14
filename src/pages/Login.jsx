@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import SEO from '../components/SEO';
 import '../styles/Auth.css';
 
 export default function Login() {
@@ -126,6 +127,10 @@ export default function Login() {
 
   return (
     <div className="auth-page">
+      <SEO
+        title={`Login as ${role === 'patient' ? 'Patient' : 'Caregiver'}`}
+        description="Securely access your AuraVue account to monitor health vitals or connect with caregivers."
+      />
       {/* --- Left Side: Branding Panel --- */}
       <div className="auth-side-branding">
         <div className="branding-content">

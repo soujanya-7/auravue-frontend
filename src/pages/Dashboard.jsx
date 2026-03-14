@@ -1,6 +1,7 @@
 // src/pages/Dashboard.jsx — Premium Caregiver Command Center
 import React, { useEffect, useState } from 'react';
 import '../styles/Dashboard.css';
+import SEO from '../components/SEO';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -360,6 +361,10 @@ const Dashboard = () => {
 
   return (
     <>
+      <SEO
+        title={`Caregiver Hub • ${patientName}`}
+        description="Monitor real-time heart rate, track location, and manage medical alerts for your connected patient."
+      />
       <div className="dashboard-v2">
 
         {/* ── TOP STATUS BAR ── */}

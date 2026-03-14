@@ -8,37 +8,61 @@
   </url>
   <url>
     <loc>https://auravue-c8b99.web.app/role</loc>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://auravue-c8b99.web.app/login</loc>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://auravue-c8b99.web.app/register</loc>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://auravue-c8b99.web.app/dashboard</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://auravue-c8b99.web.app/insights</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://auravue-c8b99.web.app/patient-dashboard</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://auravue-c8b99.web.app/connect</loc>
+    <lastmod>2026-03-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://auravue-c8b99.web.app/privacy</loc>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://auravue-c8b99.web.app/terms</loc>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://auravue-c8b99.web.app/cookies</loc>
-    <lastmod>2026-03-07</lastmod>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -4,6 +4,7 @@ import { doc, getDoc, collection, query, orderBy, limit, getDocs } from 'firebas
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Line } from 'react-chartjs-2';
 import { FaChartLine, FaHeartbeat, FaArrowUp, FaArrowDown, FaBrain, FaCalendarAlt } from 'react-icons/fa';
+import SEO from '../components/SEO';
 import '../styles/Insights.css';
 
 const Insights = () => {
@@ -12,6 +13,7 @@ const Insights = () => {
     const [patientName, setPatientName] = useState('');
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [range, setRange] = useState(500); // 500 = ~7 days, 2000 = ~30 days
     const [stats, setStats] = useState({
         avg: 0,
         min: 0,
@@ -23,8 +25,8 @@ const Insights = () => {
     useEffect(() => {
         const fetchHistory = async () => {
             if (!user) return;
+            setLoading(true);
             try {
-                // 1. Get connected patient
                 const cgSnap = await getDoc(doc(db, 'caregivers', user.uid));
                 if (cgSnap.exists() && cgSnap.data().connectedPatients?.length > 0) {
                     const pid = cgSnap.data().connectedPatients[0];
@@ -33,11 +35,10 @@ const Insights = () => {
                     const pSnap = await getDoc(doc(db, 'patients', pid));
                     if (pSnap.exists()) setPatientName(pSnap.data().name);
 
-                    // 2. Fetch last 500 records (to represent the "week" sampled)
                     const historyRef = query(
                         collection(db, 'patients', pid, 'health_history'),
                         orderBy('timestamp', 'desc'),
-                        limit(500)
+                        limit(range)
                     );
                     const hSnap = await getDocs(historyRef);
                     const rawData = hSnap.docs.map(d => ({
@@ -55,7 +56,7 @@ const Insights = () => {
             }
         };
         fetchHistory();
-    }, [user]);
+    }, [user, range]);
 
     const calculateStats = (data) => {
         if (data.length === 0) return;
@@ -104,20 +105,46 @@ const Insights = () => {
         }
     };
 
-    if (loading) return <div className="insights-page loading">Analyzing health trends...</div>;
+    if (loading && history.length === 0) return (
+        <div className="insights-page">
+            <header className="insights-header">
+                <div className="header-meta">
+                    <h1><FaChartLine /> Health Insights</h1>
+                    <p>Analyzing health trends...</p>
+                </div>
+            </header>
+            <div className="loading-state" style={{ textAlign: 'center', padding: '10rem 0', opacity: 0.5 }}>
+                Generating Deep Analytical Report...
+            </div>
+        </div>
+    );
+
     if (!patientId) return <div className="insights-page empty">No patient data available.</div>;
 
     return (
         <div className="insights-page">
+            <SEO
+                title={`Health Insights • ${patientName}`}
+                description="Deep-dive analytical report of pulse trends and health stability over the last 7 days."
+            />
             <header className="insights-header">
-                <h1><FaChartLine /> Health Insights</h1>
-                <p>7-Day Analytical Report • {patientName}</p>
+                <div className="header-meta">
+                    <h1><FaChartLine /> Health Insights</h1>
+                    <p>Analytical Report • {patientName}</p>
+                </div>
+                <div className="range-selector">
+                    <button className={range === 500 ? 'active' : ''} onClick={() => setRange(500)}>7 Days</button>
+                    <button className={range === 2000 ? 'active' : ''} onClick={() => setRange(2000)}>30 Days</button>
+                </div>
             </header>
 
             <div className="insights-grid">
                 {/* Main Chart */}
                 <div className="insights-card main-chart">
-                    <div className="card-lbl"><FaCalendarAlt /> Pulse Variability (7-Day Sample)</div>
+                    <div className="card-lbl">
+                        <FaCalendarAlt /> Pulse Variability ({range === 500 ? '7-Day' : '30-Day'} Sample)
+                        {loading && <span className="sync-indicator">Refreshing...</span>}
+                    </div>
                     <div className="chart-container">
                         <Line data={chartData} options={chartOptions} />
                     </div>

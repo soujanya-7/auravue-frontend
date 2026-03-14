@@ -1,0 +1,134 @@
+.emergency-page {
+    background: linear-gradient(180deg, #700000 0%, #050a0f 300px, #050a0f 100%);
+    min-height: 100vh;
+    color: #fff;
+    padding: 2rem 1rem;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.emergency-container {
+    maxWidth: 480px;
+    margin: 0 auto;
+}
+
+.emergency-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.critical-badge {
+    background: #ff3b3b;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    fontWeight: 700;
+    fontSize: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(255, 59, 59, 0.3);
+}
+
+.vital-card {
+    background: rgba(255, 59, 59, 0.1);
+    border: 1px solid rgba(255, 59, 59, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.detail-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #00e6e6, #00a8cc);
+    color: #050a0f;
+    padding: 1.2rem;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    transition: transform 0.2s;
+}
+
+.contact-link:hover {
+    transform: translateY(-2px);
+}
+
+.print-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+}
+
+.print-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 🖨️ PRINT STYLES */
+@media print {
+    .emergency-page {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0;
+    }
+
+    .print-btn,
+    .contact-link svg {
+        display: none !important;
+    }
+
+    .emergency-container {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .vital-card,
+    .detail-box {
+        border: 2px solid #000 !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .critical-badge {
+        border: 2px solid #000 !important;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+    }
+
+    .contact-link {
+        background: #eee !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+        color: #000 !important;
+    }
+}

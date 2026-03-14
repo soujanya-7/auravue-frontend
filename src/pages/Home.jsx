@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import SEO from "../components/SEO";
 import "../styles/Home.css";
 import useCountUp from "../hooks/useCountUp";
 
@@ -73,6 +74,10 @@ function Home() {
 
   return (
     <div className="auravue-home">
+      <SEO
+        title="Smart Health & AI-Powered Elderly Care"
+        description="AuraVue provides AI-powered health monitoring, fall detection, and automated SOS alerts for elderly individuals living independently."
+      />
 
       {/* 🚀 Full-Screen Hero */}
       <section className="hero">
@@ -85,43 +90,68 @@ function Home() {
           <div className="particle" style={{ animationDelay: '3s', left: '50%', top: '80%' }}></div>
           <div className="particle" style={{ animationDelay: '5s', left: '20%', top: '45%' }}></div>
         </div>
+
         <div className="hero-text">
-          <p className="hero-tag"><span className="live-dot"></span>AI-Powered Elderly Care</p>
+          <div className="trust-badge-row">
+            <span className="live-pill"><span className="live-dot"></span> 24/7 Monitoring</span>
+            <span className="trust-pill">HIPAA Compliant</span>
+          </div>
           <h1>Smart Health.<br />Safer Living.</h1>
           <p className="hero-desc">
-            AuraVue is an intelligent wearable neckband that continuously monitors pulse,
-            detects falls, and triggers automated SOS alerts — giving families peace of mind
-            and elders the independence they deserve.
+            AuraVue is an intelligent wearable neckband that continuously monitors vitals,
+            detects falls, and triggers automated SOS alerts — giving families peace of mind.
           </p>
           <div className="hero-cta-glass">
             <div className="hero-actions">
               <button className="btn-primary" onClick={handleGetStarted}>
-                Get Started
+                Choose Role to Start
               </button>
-              <a href="#features" className="btn-secondary">
-                Learn More ↓
+              <a href="#how" className="btn-secondary">
+                See How It Works ↓
               </a>
+            </div>
+            <p className="hero-micro-copy">No credit card required • Setup in 5 minutes</p>
+          </div>
+        </div>
+
+        <div className="hero-visual-showcase" ref={imageRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+          <div className="hero-glow"></div>
+
+          <div className="hero-device-container">
+            <img src={neckbandHero} alt="AuraVue Smart Neckband" className="hero-main-img" />
+
+            {/* Live Metric Cards Floating Around Device */}
+            <div className="live-metric-card heart-rate">
+              <div className="metric-icon">❤️</div>
+              <div className="metric-data">
+                <span className="metric-label">Heart Rate</span>
+                <span className="metric-value">72 <small>bpm</small></span>
+              </div>
+              <div className="pulse-graph">
+                <svg viewBox="0 0 100 30">
+                  <path d="M0,15 L20,15 L25,5 L30,25 L35,15 L100,15" className="graph-line" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="live-metric-card spO2">
+              <div className="metric-icon">💧</div>
+              <div className="metric-data">
+                <span className="metric-label">Blood Oxygen</span>
+                <span className="metric-value">98 <small>%</small></span>
+              </div>
+            </div>
+
+            <div className="live-metric-card safety-status">
+              <div className="metric-icon">🛡️</div>
+              <div className="metric-data">
+                <span className="metric-label">Status</span>
+                <span className="metric-value safe">Protected</span>
+              </div>
             </div>
           </div>
         </div>
-        <div
-          className="hero-image"
-          ref={imageRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="hero-glow"></div>
-          {/* Pulse waveform behind device */}
-          <svg className="pulse-waveform" viewBox="0 0 400 100" preserveAspectRatio="none">
-            <polyline
-              fill="none"
-              stroke="rgba(0, 230, 230, 0.15)"
-              strokeWidth="2"
-              points="0,50 40,50 60,50 80,20 100,80 120,30 140,60 160,50 200,50 240,50 260,20 280,80 300,30 320,60 340,50 400,50"
-            />
-          </svg>
-          <img src={neckbandHero} alt="AuraVue Smart Neckband" loading="lazy" />
-        </div>
+
         <div className="scroll-indicator">
           <span></span>
         </div>
@@ -299,7 +329,7 @@ function Home() {
           <div className="footer-brand">
             <h3>AuraVue</h3>
             <p>AI-powered health monitoring system designed to protect elderly individuals living independently, ensuring safety through intelligent prediction and real-time caregiver connectivity.</p>
-            
+
           </div>
           <div className="footer-col">
             <h4>Product</h4>

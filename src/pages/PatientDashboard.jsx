@@ -1,6 +1,7 @@
 // src/pages/PatientDashboard.jsx — Premium Patient Health Hub
 import React, { useEffect, useState } from 'react';
 import '../styles/Dashboard.css';
+import SEO from '../components/SEO';
 import { FaPhone, FaHeartbeat, FaUserShield, FaExclamationTriangle, FaComments, FaPaperPlane } from 'react-icons/fa';
 import { MdEmergency } from 'react-icons/md';
 import { auth, db } from '../firebase';
@@ -193,6 +194,10 @@ const PatientDashboard = () => {
 
   return (
     <div className="dashboard-v2">
+      <SEO
+        title="My Health Hub"
+        description="View your live health vitals and stay connected with your caregiver through AuraVue."
+      />
       {/* ── TOP STATUS BAR ── */}
       <div className="top-bar">
         <h1>Welcome Back, {patientName}</h1>

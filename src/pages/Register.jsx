@@ -16,6 +16,7 @@ import {
   where
 } from 'firebase/firestore';
 import { generateFamilyCode } from '../utils/familyCode';
+import SEO from '../components/SEO';
 import '../styles/Auth.css';
 
 export default function Register() {
@@ -103,6 +104,10 @@ export default function Register() {
 
   return (
     <div className="auth-page">
+      <SEO
+        title={`Join AuraVue as ${role}`}
+        description="Register for AuraVue to start intelligent health monitoring for yourself or your loved ones."
+      />
       {/* --- Left Side: Branding Panel --- */}
       <div className="auth-side-branding">
         <div className="branding-content">

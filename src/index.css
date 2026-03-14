@@ -1,11 +1,44 @@
+:root {
+  /* Accessibility tokens */
+  --a11y-text-base: 18px;
+  /* Larger base font for elderly audience */
+  --a11y-tap-target: 48px;
+  /* Larger minimum tap targets */
+  --a11y-contrast-high: #ffffff;
+  --a11y-contrast-dark: #050a0f;
+  --a11y-focus-ring: 3px solid #00e6e6;
+}
+
+html {
+  font-size: var(--a11y-text-base);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
+
+/* Accessibility Focus States */
+*:focus-visible {
+  outline: var(--a11y-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Base button and link tap targets */
+button,
+a {
+  min-height: var(--a11y-tap-target);
+  min-width: var(--a11y-tap-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

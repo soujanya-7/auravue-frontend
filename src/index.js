@@ -1,16 +1,27 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { register as registerServiceWorker } from './serviceWorkerRegistration';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+import { HelmetProvider } from 'react-helmet-async';
+
+const rootElement = document.getElementById('root');
+const appContent = (
   <React.StrictMode>
-    <App />
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </React.StrictMode>
 );
+
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, appContent);
+} else {
+  const root = createRoot(rootElement);
+  root.render(appContent);
+}
 
 // Register service worker for PWA offline support
 registerServiceWorker({
