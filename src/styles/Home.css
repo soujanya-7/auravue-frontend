@@ -2016,6 +2016,8 @@ footer {
   height: auto;
   filter: drop-shadow(0 0 15px rgba(0, 230, 230, 0.4));
   animation: floatImage 4s ease-in-out infinite;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 35%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 70% at center, black 35%, transparent 80%);
 }
 
 .orbit-path {
