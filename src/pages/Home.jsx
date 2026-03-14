@@ -94,7 +94,6 @@ function Home() {
         <div className="hero-text">
           <div className="trust-badge-row">
             <span className="live-pill"><span className="live-dot"></span> 24/7 Monitoring</span>
-            <span className="trust-pill">HIPAA Compliant</span>
           </div>
           <h1>Smart Health.<br />Safer Living.</h1>
           <p className="hero-desc">
