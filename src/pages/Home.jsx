@@ -109,9 +109,29 @@ function Home() {
                 See How It Works ↓
               </a>
             </div>
+            </div>
             <p className="hero-micro-copy">No credit card required • Setup in 5 minutes</p>
+
+            {/* Embedded Stats (Moved from Hub) */}
+            <div className="stats-grid-minimal hero-stats">
+              <div className="stat-item-min">
+                <h3 ref={stat1.ref}>{stat1.count}{stat1.suffix}</h3>
+                <p>Elderly living alone globally</p>
+              </div>
+              <div className="stat-item-min">
+                <h3 ref={stat2.ref}>{stat2.count}{stat2.suffix}</h3>
+                <p>Precision AI prediction rate</p>
+              </div>
+              <div className="stat-item-min">
+                <h3 ref={stat3.ref}>&lt;{stat3.count}{stat3.suffix}</h3>
+                <p>Alert response latency</p>
+              </div>
+              <div className="stat-item-min">
+                <h3 ref={stat4.ref}>{stat4.count}{stat4.suffix}</h3>
+                <p>Continuous Monitoring</p>
+              </div>
+            </div>
           </div>
-        </div>
 
         <div className="hero-visual-showcase" ref={imageRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
           <div className="hero-glow"></div>
@@ -125,8 +145,26 @@ function Home() {
               points="0,50 40,50 60,50 80,20 100,80 120,30 140,60 160,50 200,50 240,50 260,20 280,80 300,30 320,60 340,50 400,50"
             />
           </svg>
-          <div className="hero-device-container">
-            <img src={neckbandHero} alt="AuraVue Smart Neckband" className="hero-main-img" />
+          
+          {/* Integrated Orbit System */}
+          <div className="orbit-system hero-orbit">
+            <div className="central-hub">
+              <img src={neckbandHero} alt="AuraVue Device" />
+            </div>
+            <div className="orbit-path">
+              <div className="orbit-item">
+                <img src={pulseIcon} alt="Pulse" />
+              </div>
+              <div className="orbit-item">
+                <img src={fallIcon} alt="Fall Detection" />
+              </div>
+              <div className="orbit-item">
+                <img src={sosIcon} alt="SOS" />
+              </div>
+              <div className="orbit-item">
+                <img src={cameraIcon} alt="Emergency Camera" />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -158,52 +196,7 @@ function Home() {
         </div>
       </section>
 
-      {/* 🌌 Visual Hub Section (Redesigned Header + Features) */}
-      <section className="hub-section reveal">
-        <div className="hub-content">
-          <h2>Intelligent Detection.<br /><span>Instant Response.</span></h2>
-          <p className="subtitle">
-            AuraVue's integrated sensors work in perfect harmony to detect vital anomalies and falls, providing a secure safety net for your loved ones.
-          </p>
 
-          <div className="stats-grid-minimal">
-            <div className="stat-item-min">
-              <h3 ref={stat1.ref}>{stat1.count}{stat1.suffix}</h3>
-              <p>Elderly living alone globally</p>
-            </div>
-            <div className="stat-item-min">
-              <h3 ref={stat2.ref}>{stat2.count}{stat2.suffix}</h3>
-              <p>Precision AI prediction rate</p>
-            </div>
-            <div className="stat-item-min">
-              <h3 ref={stat3.ref}>&lt;{stat3.count}{stat3.suffix}</h3>
-              <p>Alert response latency</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="hub-visual">
-          <div className="orbit-system">
-            <div className="central-hub">
-              <img src={neckbandHero} alt="AuraVue Device" />
-            </div>
-            <div className="orbit-path">
-              <div className="orbit-item">
-                <img src={pulseIcon} alt="Pulse" />
-              </div>
-              <div className="orbit-item">
-                <img src={fallIcon} alt="Fall Detection" />
-              </div>
-              <div className="orbit-item">
-                <img src={sosIcon} alt="SOS" />
-              </div>
-              <div className="orbit-item">
-                <img src={cameraIcon} alt="Emergency Camera" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ⚙️ How It Works Section */}
       <section id="how" className="how-it-works reveal">

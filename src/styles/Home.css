@@ -616,6 +616,23 @@
   gap: 0.5rem;
 }
 
+/* Integrated Hero Stats */
+.hero-stats {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  gap: 2rem;
+  animation: fadeInUp 0.8s 0.8s both;
+}
+
+@media (max-width: 768px) {
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
+
 /* Trust Badges in Hero */
 .trust-badge-row {
   display: flex;
@@ -650,7 +667,7 @@
 
 /* Visual Showcase Container */
 .hero-visual-showcase {
-  flex: 1;
+  flex: 1.2;
   display: flex;
   justify-content: center;
   align-items: center;
