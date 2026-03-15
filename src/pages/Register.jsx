@@ -26,6 +26,7 @@ export default function Register() {
 
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [enteredCode, setEnteredCode] = useState('');
 
@@ -42,6 +43,7 @@ export default function Register() {
         await setDoc(doc(db, 'caregivers', user.uid), {
           email,
           name,
+          mobileNumber,
           role,
           familyCode,
           createdAt: new Date().toISOString()
@@ -68,6 +70,7 @@ export default function Register() {
         await setDoc(doc(db, 'patients', user.uid), {
           email,
           name,
+          mobileNumber,
           role,
           familyCode: enteredCode,
           authorizedCaregivers: [caregiverId],
@@ -77,6 +80,7 @@ export default function Register() {
         await setDoc(doc(db, `caregivers/${caregiverId}/patients`, user.uid), {
           email,
           name,
+          mobileNumber,
           linkedOn: new Date().toISOString()
         });
 
@@ -141,6 +145,14 @@ export default function Register() {
                 placeholder="Email address"
                 required
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <input
+                type="tel"
+                placeholder="Mobile Number (e.g. +1234567890)"
+                required
+                onChange={(e) => setMobileNumber(e.target.value)}
               />
             </div>
             <div className="input-group">

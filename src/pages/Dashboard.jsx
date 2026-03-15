@@ -77,10 +77,9 @@ const Dashboard = () => {
           if (cgData.connectedPatients?.length > 0) {
             const pid = cgData.connectedPatients[0];
             setPatientId(pid);
-            // Also fetch patient's phone once we have their ID
             const patSnap = await getDoc(doc(db, 'patients', pid));
             if (patSnap.exists()) {
-              setPatientPhone(patSnap.data().phone || '');
+              setPatientPhone(patSnap.data().mobileNumber || patSnap.data().phone || '');
             }
           }
         }
@@ -293,6 +292,16 @@ const Dashboard = () => {
       window.open(`tel:${patientPhone}`, '_self');
     } else {
       alert(`📞 No phone number on file for ${patientName}. Please add it in patient settings.`);
+    }
+  };
+
+  // 1b. SMS Patient
+  const handleSMSPatient = () => {
+    if (patientPhone) {
+      const message = "Checking in on you via AuraVue.";
+      window.open(`sms:${patientPhone}?body=${encodeURIComponent(message)}`, '_self');
+    } else {
+      alert(`💬 No phone number on file for ${patientName}. Please add it in patient settings.`);
     }
   };
 
@@ -536,6 +545,9 @@ const Dashboard = () => {
               <h4>Quick Actions</h4>
               <button className="action-btn" onClick={handleCallPatient}>
                 <span className="action-icon"><FaPhone /></span> Call Patient
+              </button>
+              <button className="action-btn" onClick={handleSMSPatient}>
+                <span className="action-icon"><FaPaperPlane /></span> Text Patient
               </button>
               <button className="action-btn" onClick={() => setShowMessages(true)} disabled={!patientId}>
                 <span className="action-icon"><FaComments /></span> Message Hub

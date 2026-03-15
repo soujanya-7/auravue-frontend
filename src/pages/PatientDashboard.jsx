@@ -46,7 +46,7 @@ const PatientDashboard = () => {
             if (caregiverSnap.exists()) {
               const cgData = caregiverSnap.data();
               setCaregiverName(cgData.name);
-              setCaregiverPhone(cgData.phone || '');
+              setCaregiverPhone(cgData.mobileNumber || cgData.phone || '');
               if (cgData.minPulse && cgData.maxPulse) {
                 setThresholds({ minPulse: cgData.minPulse, maxPulse: cgData.maxPulse });
               }
@@ -157,6 +157,16 @@ const PatientDashboard = () => {
     }
   };
 
+  // SMS caregiver handler
+  const handleSMSCaregiver = () => {
+    if (caregiverPhone) {
+      const message = "SOS: I need help immediately!";
+      window.open(`sms:${caregiverPhone}?body=${encodeURIComponent(message)}`, '_self');
+    } else {
+      alert(`💬 No phone number on file for ${caregiverName || 'your caregiver'}. Please ask them to add it in their settings.`);
+    }
+  };
+
   const formatMsgTime = (ts) => {
     if (!ts?.toDate) return '';
     return ts.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -181,6 +191,11 @@ const PatientDashboard = () => {
       await updateDoc(doc(db, 'patients', user.uid), {
         lastSos: serverTimestamp()
       });
+
+      // TRIGGER NATIVE CALL
+      if (caregiverPhone) {
+        window.open(`tel:${caregiverPhone}`, '_self');
+      }
     } catch (err) {
       console.error('❌ SOS write failed:', err);
     }
@@ -303,6 +318,9 @@ const PatientDashboard = () => {
             <h4>Quick Contact</h4>
             <button className="action-btn" onClick={handleCallCaregiver}>
               <span className="action-icon"><FaPhone /></span> Call {caregiverName || 'Caregiver'}
+            </button>
+            <button className="action-btn" onClick={handleSMSCaregiver}>
+              <span className="action-icon"><FaPaperPlane /></span> Text {caregiverName || 'Caregiver'}
             </button>
             <button className="action-btn" onClick={() => setShowMessages(true)} disabled={!caregiverId}>
               <span className="action-icon"><FaComments /></span> Message Hub
