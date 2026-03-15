@@ -7,6 +7,7 @@ import {
 } from 'firebase/firestore';
 import { getDatabase } from 'firebase/database';
 import { getStorage } from 'firebase/storage';
+import { getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArwqibZlnSA7SIfnwMGyqVJO8gzI_V6cU",
@@ -39,4 +40,7 @@ const rtdb = getDatabase(app);
 // Storage
 const storage = getStorage(app);
 
-export { app, auth, googleProvider, db, rtdb, storage };
+// Functions
+const functions = getFunctions(app);
+
+export { app, auth, googleProvider, db, rtdb, storage, functions };

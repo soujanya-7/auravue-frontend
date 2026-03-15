@@ -4,10 +4,11 @@ import '../styles/Dashboard.css';
 import SEO from '../components/SEO';
 import { FaPhone, FaHeartbeat, FaUserShield, FaExclamationTriangle, FaComments, FaPaperPlane } from 'react-icons/fa';
 import { MdEmergency } from 'react-icons/md';
-import { auth, db } from '../firebase';
+import { auth, db, functions } from '../firebase';
 import {
   doc, getDoc, updateDoc, addDoc, collection, serverTimestamp, onSnapshot, query, orderBy, limit
 } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 const PatientDashboard = () => {
@@ -171,12 +172,13 @@ const PatientDashboard = () => {
     if (!ts?.toDate) return '';
     return ts.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+  // 4. Main Emergency SOS Handler
   const handleSos = async () => {
     setSosActive(true);
     setTimeout(() => setSosActive(false), 6000);
 
     try {
-      // Write a persistent SOS alert to the caregiver's alerts sub-collection
+      // 1. Write persistent SOS alert to the caregiver's visual dashboard
       if (caregiverId) {
         await addDoc(collection(db, 'caregivers', caregiverId, 'alerts'), {
           type: 'SOS',
@@ -187,17 +189,31 @@ const PatientDashboard = () => {
           timestamp: serverTimestamp()
         });
       }
-      // Also mark on the patient's own doc
+      // 2. Mark on the patient's own doc
       await updateDoc(doc(db, 'patients', user.uid), {
         lastSos: serverTimestamp()
       });
 
-      // TRIGGER NATIVE CALL
+      // 3. SECURE TWILIO INTEGRATION
+      // Trigger the background Firebase Cloud Function to send an automated SMS.
       if (caregiverPhone) {
+        try {
+          const sendSosSms = httpsCallable(functions, 'sendSosSms');
+          await sendSosSms({
+            toPhone: caregiverPhone,
+            messageBody: `🆘 URGENT SOS: ${patientName} has triggered their emergency alert via AuraVue. Immediate assistance required.`
+          });
+          console.log("✅ Twilio backend SMS sent successfully!");
+        } catch (smsErr) {
+          console.error('❌ Twilio backend SMS failed:', smsErr);
+          // If the cloud function fails (e.g. not deployed on Blaze plan yet), fallback securely.
+        }
+
+        // 4. Trigger the native device phone dialer as the ultimate fallback / simultaneous voice contact
         window.open(`tel:${caregiverPhone}`, '_self');
       }
     } catch (err) {
-      console.error('❌ SOS write failed:', err);
+      console.error('❌ SOS sequence failed:', err);
     }
   };
 
