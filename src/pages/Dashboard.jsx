@@ -438,12 +438,33 @@ const Dashboard = () => {
               )}
               {showAlerts && (
                 <div className="notif-dropdown">
-                  {alerts.length === 0 && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem' }}>No alerts yet</p>}
-                  {alerts.map((a) => (
-                    <p key={a.id} style={{ opacity: a.read ? 0.5 : 1 }}>
-                      {getAlertIcon(a.type)} {a.message} <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>{formatTime(a.timestamp)}</span>
-                    </p>
-                  ))}
+                  {alerts.length === 0 && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', textAlign: 'center', padding: '1rem' }}>No new notifications</p>}
+                  <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                    {alerts.map((a) => (
+                      <div key={a.id} style={{ 
+                        opacity: a.read ? 0.5 : 1, 
+                        padding: '0.8rem', 
+                        borderBottom: '1px solid rgba(255,255,255,0.05)',
+                        display: 'flex',
+                        gap: '0.8rem',
+                        alignItems: 'start'
+                      }}>
+                        <span style={{ fontSize: '1.1rem' }}>{getAlertIcon(a.type)}</span>
+                        <div>
+                          <p style={{ margin: 0, fontSize: '0.85rem', color: '#fff', fontWeight: a.read ? 400 : 600 }}>{a.message}</p>
+                          <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>{formatTime(a.timestamp)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {alerts.length > 0 && (
+                    <button 
+                      onClick={markAllRead}
+                      style={{ width: '100%', padding: '0.6rem', background: 'rgba(0,230,230,0.1)', border: 'none', color: '#00e6e6', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', marginTop: '0.5rem', borderRadius: '8px' }}
+                    >
+                      Mark all as read
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -600,36 +621,6 @@ const Dashboard = () => {
               <button className="action-btn emergency" onClick={handleTriggerSOS} disabled={!patientId}>
                 <span className="action-icon"><MdEmergency /></span> Trigger SOS
               </button>
-            </div>
-
-            {/* Alerts */}
-            <div className="glass-card alerts-panel">
-              <h4>Recent Alerts {unreadCount > 0 && <span style={{ background: '#ff3b3b', borderRadius: '50%', padding: '0 6px', fontSize: '0.7rem', marginLeft: '0.5rem' }}>{unreadCount} new</span>}</h4>
-              {alerts.length === 0 && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', padding: '0.5rem 0' }}>No alerts yet</p>}
-              {alerts.map((a) => (
-                <div key={a.id} className="alert-item" style={{ opacity: a.read ? 0.5 : 1 }}>
-                  <span style={{ fontSize: '1rem' }}>{getAlertIcon(a.type)}</span>
-                  <div>
-                    <span style={{ fontSize: '0.88rem' }}>{a.message}</span>
-                    <span style={{ display: 'block', fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>{formatTime(a.timestamp)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Medications */}
-            <div className="glass-card alerts-panel" style={{ marginTop: '1rem' }}>
-              <h4>💊 Current Medications</h4>
-              {medications.length === 0 && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', padding: '0.5rem 0' }}>No meds logged</p>}
-              {medications.map((m) => (
-                <div key={m.id} className="alert-item">
-                  <span style={{ fontSize: '1rem' }}>💊</span>
-                  <div>
-                    <span style={{ fontSize: '0.88rem', fontWeight: 600 }}>{m.name}</span>
-                    <span style={{ display: 'block', fontSize: '0.72rem', color: 'rgba(0,230,230,0.6)' }}>{m.dose}</span>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
 
