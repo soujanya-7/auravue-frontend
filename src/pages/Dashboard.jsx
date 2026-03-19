@@ -19,6 +19,7 @@ import 'leaflet/dist/leaflet.css';
 import { auth, db } from '../firebase';
 import { doc, getDoc, onSnapshot, collection, query, orderBy, limit, updateDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { requestNotificationPermission } from '../services/NotificationService';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler);
 
@@ -60,6 +61,7 @@ const Dashboard = () => {
     activityLevel: 'Calculating...',
     rhythm: 100
   });
+  const [medications, setMedications] = useState([]);
 
   // 1. Fetch caregiver & connected patient info
   useEffect(() => {
@@ -71,6 +73,8 @@ const Dashboard = () => {
         if (cgSnap.exists()) {
           const cgData = cgSnap.data();
           setCaregiverName(cgData.name || 'Caregiver');
+          // Request notification permission
+          requestNotificationPermission(user.uid, 'caregiver');
           if (cgData.minPulse && cgData.maxPulse) {
             setThresholds({ minPulse: cgData.minPulse, maxPulse: cgData.maxPulse });
           }
@@ -165,39 +169,49 @@ const Dashboard = () => {
     });
   };
 
-  // Load messages between patient and caregiver
-  useEffect(() => {
-    if (!user || !patientId) return;
-    const msgsRef = query(
-      collection(db, 'chats', [user.uid, patientId].sort().join('_'), 'messages'),
-      orderBy('timestamp', 'asc'),
-      limit(50)
-    );
-    const unsub = onSnapshot(msgsRef, (snap) => {
-      setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-    });
-    return () => unsub();
-  }, [user, patientId]);
-
-  // Send message handler
-  const handleSendMessage = async () => {
-    if (!chatInput.trim() || !patientId) return;
-    const chatId = [user.uid, patientId].sort().join('_');
-    try {
-      await addDoc(collection(db, 'chats', chatId, 'messages'), {
-        text: chatInput.trim(),
-        senderId: user.uid,
-        timestamp: serverTimestamp()
-      });
-      setChatInput('');
-    } catch (err) {
-      console.error('❌ Error sending message:', err);
-    }
-  };
-
   const formatMsgTime = (ts) => {
     if (!ts?.toDate) return '';
     return ts.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  // 4. Fetch 24h Health History for Trends
+  useEffect(() => {
+    if (!patientId) return;
+    const historyRef = query(
+      collection(db, 'patients', patientId, 'health_history'),
+      orderBy('timestamp', 'desc'),
+      limit(100)
+    );
+
+    const unsub = onSnapshot(historyRef, (snap) => {
+      const history = snap.docs.map(d => ({
+        pulse: d.data().pulse,
+        time: d.data().timestamp?.toDate() ? d.data().timestamp.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''
+      })).reverse();
+      setChartData(history.map(h => h.pulse));
+    });
+
+    return () => unsub();
+  }, [patientId]);
+
+  // 5. Medication Logic
+  const handleLogMedication = async () => {
+    if (!patientId || !medInput.name.trim()) return;
+    setMedLogging(true);
+    try {
+      await addDoc(collection(db, 'patients', patientId, 'medications'), {
+        ...medInput,
+        loggedBy: user.uid,
+        timestamp: serverTimestamp()
+      });
+      setShowMedModal(false);
+      setMedInput({ name: '', dose: '', note: '' });
+      alert('✅ Medication logged successfully.');
+    } catch (err) {
+      console.error('❌ Error logging medication:', err);
+    } finally {
+      setMedLogging(false);
+    }
   };
 
   // 4. Location drift simulation
@@ -305,29 +319,50 @@ const Dashboard = () => {
     }
   };
 
-  // 2. Log Medication
-  const handleLogMedication = async () => {
-    if (!medInput.name.trim()) return;
-    setMedLogging(true);
+  // Load messages between patient and caregiver
+  useEffect(() => {
+    if (!user || !patientId) return;
+    const msgsRef = query(
+      collection(db, 'chats', [user.uid, patientId].sort().join('_'), 'messages'),
+      orderBy('timestamp', 'asc'),
+      limit(50)
+    );
+    const unsub = onSnapshot(msgsRef, (snap) => {
+      setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+    return () => unsub();
+  }, [user, patientId]);
+
+  // Send message handler
+  const handleSendMessage = async () => {
+    if (!chatInput.trim() || !patientId) return;
+    const chatId = [user.uid, patientId].sort().join('_');
     try {
-      await addDoc(collection(db, 'patients', patientId, 'medication_log'), {
-        name: medInput.name.trim(),
-        dose: medInput.dose.trim(),
-        note: medInput.note.trim(),
-        loggedBy: caregiverName,
+      await addDoc(collection(db, 'chats', chatId, 'messages'), {
+        text: chatInput.trim(),
+        senderId: user.uid,
         timestamp: serverTimestamp()
       });
-      setMedInput({ name: '', dose: '', note: '' });
-      setShowMedModal(false);
+      setChatInput('');
     } catch (err) {
-      console.error('❌ Medication log failed:', err);
-      alert('Failed to log medication. Please try again.');
-    } finally {
-      setMedLogging(false);
+      console.error('❌ Error sending message:', err);
     }
   };
 
-  // 3. Track Location — scroll to map
+  // 6. Fetch Medications
+  useEffect(() => {
+    if (!patientId) return;
+    const medsRef = query(
+      collection(db, 'patients', patientId, 'medications'),
+      orderBy('timestamp', 'desc'),
+      limit(5)
+    );
+    const unsub = onSnapshot(medsRef, (snap) => {
+      setMedications(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+    return () => unsub();
+  }, [patientId]);
+
   const handleTrackLocation = () => {
     mapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
@@ -457,57 +492,61 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* CENTER-TOP — Hero Pulse */}
-          <div className="glass-card hero-pulse-card">
-            <div className="pulse-ring-container">
-              <div className="pulse-ring" style={{ borderRadius: '50%' }}></div>
-              <div className="pulse-ring" style={{ borderRadius: '50%' }}></div>
-              <div className="pulse-ring" style={{ borderRadius: '50%' }}></div>
-              <div className="pulse-core">
-                <span className="pulse-bpm" style={{ color: getPulseColor() }}>{pulse || '—'}</span>
-                <span className="pulse-unit">BPM</span>
+          {/* CENTER COLUMN — Hero, Vitals, Chart */}
+          <div className="dashboard-main-content">
+            {/* CENTER-TOP — Hero Pulse */}
+            <div className="glass-card hero-pulse-card">
+              <div className="pulse-ring-container">
+                <div className="pulse-ring" style={{ borderRadius: '50%' }}></div>
+                <div className="pulse-ring" style={{ borderRadius: '50%' }}></div>
+                <div className="pulse-ring" style={{ borderRadius: '50%' }}></div>
+                <div className="pulse-core">
+                  <span className="pulse-bpm" style={{ color: getPulseColor() }}>{pulse || '—'}</span>
+                  <span className="pulse-unit">BPM</span>
+                </div>
+              </div>
+              <div className="pulse-info">
+                <p className="pulse-info h2" style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(0,230,230,0.6)', margin: '0 0 0.5rem' }}>LIVE HEART RATE</p>
+                <p className="pulse-status-text" style={{ color: getPulseColor() }}>{pulseStatus.text}</p>
+                <p className="pulse-subtext">Real-time monitoring active for {patientName}</p>
+                <div className="pulse-range">
+                  <span className="range-tag normal">Thresholds: {thresholds.minPulse}–{thresholds.maxPulse}</span>
+                  <span className={`range-tag ${pulseStatus.tag}`}>Current: {pulse || '—'} bpm</span>
+                </div>
               </div>
             </div>
-            <div className="pulse-info">
-              <p className="pulse-info h2" style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(0,230,230,0.6)', margin: '0 0 0.5rem' }}>LIVE HEART RATE</p>
-              <p className="pulse-status-text" style={{ color: getPulseColor() }}>{pulseStatus.text}</p>
-              <p className="pulse-subtext">Real-time monitoring active for {patientName}</p>
-              <div className="pulse-range">
-                <span className="range-tag normal">Thresholds: {thresholds.minPulse}–{thresholds.maxPulse}</span>
-                <span className={`range-tag ${pulseStatus.tag}`}>Current: {pulse || '—'} bpm</span>
+
+            {/* CENTER-MIDDLE — Vital Stats */}
+            <div className="vitals-row">
+              <div className="glass-card stat-card pulse-card">
+                <span className="stat-icon">💖</span>
+                <p className="stat-label">Heart Rate</p>
+                <p className="stat-value" style={{ color: getPulseColor() }}>{pulse || '—'}</p>
+                <p className="stat-unit">beats per minute</p>
+              </div>
+              <div className="glass-card stat-card temp-card">
+                <span className="stat-icon">🌡️</span>
+                <p className="stat-label">Body Temp</p>
+                <p className="stat-value" style={{ color: '#ff9f40' }}>{temp}</p>
+                <p className="stat-unit">degrees Celsius</p>
+              </div>
+              <div className="glass-card stat-card bp-card">
+                <span className="stat-icon">🩸</span>
+                <p className="stat-label">Blood Pressure</p>
+                <p className="stat-value" style={{ color: '#c87eff', fontSize: '1.5rem' }}>{bp}</p>
+                <p className="stat-unit">mmHg systolic/diastolic</p>
+              </div>
+            </div>
+
+            {/* CENTER-BOTTOM — Chart */}
+            <div className="glass-card chart-panel">
+              <h3><span>📈</span> Pulse History</h3>
+              <div className="chart-wrapper">
+                <Line data={chartConfig} options={chartOptions} />
               </div>
             </div>
           </div>
 
-          {/* CENTER-MIDDLE — Vital Stats */}
-          <div className="vitals-row">
-            <div className="glass-card stat-card pulse-card">
-              <span className="stat-icon">💖</span>
-              <p className="stat-label">Heart Rate</p>
-              <p className="stat-value" style={{ color: getPulseColor() }}>{pulse || '—'}</p>
-              <p className="stat-unit">beats per minute</p>
-            </div>
-            <div className="glass-card stat-card temp-card">
-              <span className="stat-icon">🌡️</span>
-              <p className="stat-label">Body Temp</p>
-              <p className="stat-value" style={{ color: '#ff9f40' }}>{temp}</p>
-              <p className="stat-unit">degrees Celsius</p>
-            </div>
-            <div className="glass-card stat-card bp-card">
-              <span className="stat-icon">🩸</span>
-              <p className="stat-label">Blood Pressure</p>
-              <p className="stat-value" style={{ color: '#c87eff', fontSize: '1.5rem' }}>{bp}</p>
-              <p className="stat-unit">mmHg systolic/diastolic</p>
-            </div>
-          </div>
-
-          {/* CENTER-BOTTOM — Chart */}
-          <div className="glass-card chart-panel">
-            <h3><span>📈</span> Pulse History</h3>
-            <div className="chart-wrapper">
-              <Line data={chartConfig} options={chartOptions} />
-            </div>
-          </div>
 
           {/* RIGHT — AI Sidebar */}
           {/* RIGHT — AI Sidebar */}
@@ -573,6 +612,21 @@ const Dashboard = () => {
                   <div>
                     <span style={{ fontSize: '0.88rem' }}>{a.message}</span>
                     <span style={{ display: 'block', fontSize: '0.72rem', color: 'rgba(255,255,255,0.3)', marginTop: '2px' }}>{formatTime(a.timestamp)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Medications */}
+            <div className="glass-card alerts-panel" style={{ marginTop: '1rem' }}>
+              <h4>💊 Current Medications</h4>
+              {medications.length === 0 && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', padding: '0.5rem 0' }}>No meds logged</p>}
+              {medications.map((m) => (
+                <div key={m.id} className="alert-item">
+                  <span style={{ fontSize: '1rem' }}>💊</span>
+                  <div>
+                    <span style={{ fontSize: '0.88rem', fontWeight: 600 }}>{m.name}</span>
+                    <span style={{ display: 'block', fontSize: '0.72rem', color: 'rgba(0,230,230,0.6)' }}>{m.dose}</span>
                   </div>
                 </div>
               ))}

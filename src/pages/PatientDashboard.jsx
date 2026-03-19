@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { requestNotificationPermission } from '../services/NotificationService';
 
 const PatientDashboard = () => {
   const [user] = useAuthState(auth);
@@ -20,6 +21,7 @@ const PatientDashboard = () => {
   const [pulse, setPulse] = useState(0);
   const [thresholds, setThresholds] = useState({ minPulse: 60, maxPulse: 100 });
   const [sosActive, setSosActive] = useState(false);
+  const [sustainedAlertCount, setSustainedAlertCount] = useState(0);
   const [showMessages, setShowMessages] = useState(false);
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
@@ -35,6 +37,9 @@ const PatientDashboard = () => {
         if (patientSnap.exists()) {
           const patientData = patientSnap.data();
           setPatientName(patientData.name || 'Patient');
+          
+          // Request notification permission
+          requestNotificationPermission(user.uid, 'patient');
 
           const cgId = (patientData.authorizedCaregivers && patientData.authorizedCaregivers.length > 0)
             ? patientData.authorizedCaregivers[0]
@@ -101,6 +106,16 @@ const PatientDashboard = () => {
 
         // Threshold alert using custom bounds
         if (randomPulse > thresholds.maxPulse || randomPulse < thresholds.minPulse) {
+          setSustainedAlertCount(prev => {
+            const newCount = prev + 1;
+            if (newCount >= 3) {
+              console.log("🚨 Sustained critical vitals detected. Initializing Auto-SOS.");
+              handleSos();
+              return 0; // Reset after trigger
+            }
+            return newCount;
+          });
+
           if (caregiverId) {
             await addDoc(collection(db, 'caregivers', caregiverId, 'alerts'), {
               type: randomPulse > thresholds.maxPulse ? 'HIGH_PULSE' : 'LOW_PULSE',
@@ -113,6 +128,8 @@ const PatientDashboard = () => {
               timestamp: serverTimestamp()
             });
           }
+        } else {
+          setSustainedAlertCount(0); // Reset if back in range
         }
       } catch (err) {
         console.error('❌ Failed to sync live vitals:', err);

@@ -41,3 +41,68 @@ exports.sendSosSms = functions.https.onCall(async (data, context) => {
     throw new functions.https.HttpsError('internal', 'Unable to send SMS via Twilio. Check server logs.');
   }
 });
+
+/**
+ * Triggered whenever a new alert is added to a caregiver's sub-collection.
+ * Sends a push notification to the caregiver's registered FCM tokens.
+ */
+exports.onAlertCreated = functions.firestore
+  .document('caregivers/{caregiverId}/alerts/{alertId}')
+  .onCreate(async (snapshot, context) => {
+    const alertData = snapshot.data();
+    const caregiverId = context.params.caregiverId;
+
+    try {
+      // 1. Fetch caregiver's FCM tokens
+      const caregiverDoc = await admin.firestore().doc(`caregivers/${caregiverId}`).get();
+      const fcmTokens = caregiverDoc.data()?.fcmTokens || [];
+
+      if (fcmTokens.length === 0) {
+        console.log(`No FCM tokens found for caregiver ${caregiverId}`);
+        return null;
+      }
+
+      // 2. Construct the notification payload
+      const payload = {
+        notification: {
+          title: `🆘 AuraVue Alert: ${alertData.type}`,
+          body: alertData.message || 'Immediate attention required.',
+          click_action: 'https://auravue-c8b99.web.app/dashboard',
+          icon: 'https://auravue-c8b99.web.app/logo192.png'
+        },
+        data: {
+          alertId: context.params.alertId,
+          type: alertData.type
+        }
+      };
+
+      // 3. Send to all tokens
+      const response = await admin.messaging().sendToDevice(fcmTokens, payload);
+      console.log(`Successfully sent ${response.successCount} notifications.`);
+
+      // Optional: Cleanup expired tokens
+      const tokensToRemove = [];
+      response.results.forEach((result, index) => {
+        const error = result.error;
+        if (error) {
+          console.error('Failure sending notification to', fcmTokens[index], error);
+          if (error.code === 'messaging/invalid-registration-token' ||
+              error.code === 'messaging/registration-token-not-registered') {
+            tokensToRemove.push(fcmTokens[index]);
+          }
+        }
+      });
+
+      if (tokensToRemove.length > 0) {
+        await admin.firestore().doc(`caregivers/${caregiverId}`).update({
+          fcmTokens: admin.firestore.FieldValue.arrayRemove(...tokensToRemove)
+        });
+      }
+
+      return null;
+    } catch (error) {
+      console.error('Error sending push notification:', error);
+      return null;
+    }
+  });
+

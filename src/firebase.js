@@ -8,6 +8,7 @@ import {
 import { getDatabase } from 'firebase/database';
 import { getStorage } from 'firebase/storage';
 import { getFunctions } from 'firebase/functions';
+import { getMessaging } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: "AIzaSyArwqibZlnSA7SIfnwMGyqVJO8gzI_V6cU",
@@ -43,4 +44,7 @@ const storage = getStorage(app);
 // Functions
 const functions = getFunctions(app);
 
-export { app, auth, googleProvider, db, rtdb, storage, functions };
+// Messaging
+const messaging = getMessaging(app);
+
+export { app, auth, googleProvider, db, rtdb, storage, functions, messaging };
