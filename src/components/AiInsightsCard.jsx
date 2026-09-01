@@ -22,7 +22,9 @@ const AiInsightsCard = ({
   activityPct = 25,
   rhythmScore = 96,
   anomalyText = null,
-  medications = []
+  medications = [],
+  isEmergency = false,
+  emergencyType = null
 }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [assessment, setAssessment] = useState(null);
@@ -38,7 +40,9 @@ const AiInsightsCard = ({
         bp,
         stability,
         activityLevel,
-        medications
+        medications,
+        isEmergency,
+        emergencyType
       });
       setAssessment(result);
     } catch (err) {
@@ -46,7 +50,7 @@ const AiInsightsCard = ({
     } finally {
       setIsScanning(false);
     }
-  }, [patientName, pulse, spO2, temp, bp, stability, activityLevel, medications]);
+  }, [patientName, pulse, spO2, temp, bp, stability, activityLevel, medications, isEmergency, emergencyType]);
 
   // Initial assessment on load
   useEffect(() => {

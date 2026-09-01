@@ -389,6 +389,7 @@ const Dashboard = () => {
         });
       } catch (e) {}
     }
+    await markAllRead();
     toast.success('Emergency marked as resolved.');
   };
 
@@ -690,6 +691,8 @@ const Dashboard = () => {
               activityPct={aiStats.activity}
               rhythmScore={aiStats.rhythm}
               anomalyText={aiStats.anomalyText}
+              isEmergency={Boolean(activeEmergency)}
+              emergencyType={activeEmergency?.type}
             />
 
             {/* Quick Actions Hub */}

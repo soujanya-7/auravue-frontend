@@ -14,7 +14,9 @@ export async function analyzePatientHealthWithAi({
   bp = '120/80',
   stability = 95,
   activityLevel = 'Resting',
-  medications = []
+  medications = [],
+  isEmergency = false,
+  emergencyType = null
 }) {
   const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
 
@@ -29,7 +31,9 @@ export async function analyzePatientHealthWithAi({
       bp,
       stability,
       activityLevel,
-      medications
+      medications,
+      isEmergency,
+      emergencyType
     });
     if (response?.data?.summary) {
       return response.data;
@@ -52,6 +56,7 @@ export async function analyzePatientHealthWithAi({
         - Blood Pressure: ${bp} mmHg (Normal: ~120/80)
         - Cardiovascular Stability Score: ${stability}%
         - Activity State: ${activityLevel}
+        - Active Emergency Event: ${isEmergency ? `YES - ${emergencyType || 'SOS/Fall Alert'}` : 'None'}
         - Scheduled Medications: ${medications.map(m => m.name || m.title || 'Meds').join(', ') || 'None reported'}
 
         Respond ONLY with a valid JSON object matching this exact schema:
@@ -110,7 +115,9 @@ export async function analyzePatientHealthWithAi({
     temp,
     stability,
     activityLevel,
-    medications
+    medications,
+    isEmergency,
+    emergencyType
   });
 }
 
@@ -124,11 +131,29 @@ function generateClinicalHeuristicAssessment({
   temp,
   stability,
   activityLevel,
-  medications
+  medications,
+  isEmergency,
+  emergencyType
 }) {
   let riskLevel = 'Optimal';
   const recommendations = [];
   let summary = '';
+
+  if (isEmergency) {
+    riskLevel = 'Critical Alert';
+    summary = `Emergency event (${emergencyType || 'Fall / SOS'}) is currently active for ${patientName}. Caregiver action is required.`;
+    recommendations.push('Initiate phone or 2-way voice channel with patient.');
+    recommendations.push('Inspect live GPS map below for exact coordinates.');
+    recommendations.push('Click "Resolve Alert" once the patient is confirmed safe.');
+    return {
+      summary,
+      riskLevel,
+      confidenceScore: 99,
+      recommendations,
+      source: 'AuraVue AI Clinical Engine v2.4',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+  }
 
   const isTachycardia = pulse > 105;
   const isBradycardia = pulse < 55;
