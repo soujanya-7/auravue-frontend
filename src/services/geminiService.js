@@ -41,7 +41,7 @@ export async function analyzePatientHealthWithAi({
   // 2. Direct Gemini API call if REACT_APP_GEMINI_API_KEY is configured
   if (apiKey) {
     try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
       const prompt = `
         You are an expert Geriatric Cardiologist & Health AI for the AuraVue eldercare system.
         Evaluate this patient's live telemetry:
@@ -67,26 +67,35 @@ export async function analyzePatientHealthWithAi({
         }
       `;
 
+      const headers = {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey
+      };
+
       const res = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: 'application/json', temperature: 0.2 }
+          generationConfig: { temperature: 0.2 }
         })
       });
 
       if (res.ok) {
         const json = await res.json();
-        const rawText = json.candidates?.[0]?.content?.parts?.[0]?.text;
+        let rawText = json.candidates?.[0]?.content?.parts?.[0]?.text;
         if (rawText) {
+          rawText = rawText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
           const parsed = JSON.parse(rawText);
           return {
             ...parsed,
-            source: 'Gemini 1.5 Flash',
+            source: 'Google Gemini 1.5 Flash',
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
         }
+      } else {
+        const errText = await res.text();
+        console.warn('Gemini API response non-ok:', res.status, errText);
       }
     } catch (err) {
       console.warn('Gemini API call failed, using clinical reasoning fallback:', err);
