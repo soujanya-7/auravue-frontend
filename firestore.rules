@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper: Check if user is signed in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // Helper: Check if user is the owner of the document
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Caregivers collection
+    match /caregivers/{caregiverId} {
+      // Caregivers can read/write their own profiles
+      allow read, write: if isOwner(caregiverId);
+      
+      // Alerts inside caregivers
+      match /alerts/{alertId} {
+        // Caregivers can manage their own alerts
+        allow read, update, delete: if isOwner(caregiverId);
+        // Allow authenticated patients to create alerts (SOS/Thresholds)
+        allow create: if isSignedIn();
+      }
+
+      // Medication Reminders
+      match /reminders/{reminderId} {
+        allow read, write: if isOwner(caregiverId);
+      }
+    }
+
+    // Patients collection
+    match /patients/{patientId} {
+      // Patients can read/write their own profile
+      // Caregivers can read their connected patient's profile
+      allow read: if isOwner(patientId) || 
+        (isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/patients/$(patientId)).data.authorizedCaregivers);
+      allow write: if isOwner(patientId);
+      
+      // Health history, medication logs, etc.
+      match /{subCollection}/{document} {
+        allow read: if isOwner(patientId) || 
+          (isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/patients/$(patientId)).data.authorizedCaregivers);
+        allow write: if isOwner(patientId) || 
+          (isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/patients/$(patientId)).data.authorizedCaregivers);
+      }
+
+      // PUBLIC Emergency Info (No Auth Required)
+      match /public_profile/info {
+        allow read: if true;
+        allow write: if isOwner(patientId) || 
+          (isSignedIn() && request.auth.uid in get(/databases/$(database)/documents/patients/$(patientId)).data.authorizedCaregivers);
+      }
+    }
+
+    // Chats collection
+    match /chats/{chatId} {
+      // Each user can only read/write messages in chats they are part of
+      // chatId format is uid1_uid2 (sorted alphabetically)
+      allow read, write: if isSignedIn() && (chatId.split('_')[0] == request.auth.uid || chatId.split('_')[1] == request.auth.uid);
+      
+      match /messages/{messageId} {
+        allow read, write: if isSignedIn() && (chatId.split('_')[0] == request.auth.uid || chatId.split('_')[1] == request.auth.uid);
+      }
+    }
+  }
+}
