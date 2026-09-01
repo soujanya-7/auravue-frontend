@@ -320,10 +320,6 @@ function Home() {
             <p>
               Next-generation AI health monitoring ecosystem ensuring elderly independence, real-time vital telemetry, and instant caregiver emergency response.
             </p>
-            <div className="footer-status-pill">
-              <span className="status-indicator-dot" />
-              <span>Network Status: All Systems Operational</span>
-            </div>
           </div>
 
           {/* Column 1: Core Technology */}
