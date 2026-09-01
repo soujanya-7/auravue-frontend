@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastProvider } from "./context/ToastContext";
 
 // Shared Components (always loaded - small)
 import Navbar from "./components/Navbar";
@@ -48,79 +49,81 @@ const LoadingSpinner = () => (
 function App() {
   return (
     <Router>
-      <Navbar />
-      <Suspense fallback={<LoadingSpinner />}>
-        <Routes>
-          {/* Landing Page */}
-          <Route path="/" element={<Home />} />
+      <ToastProvider>
+        <Navbar />
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            {/* Landing Page */}
+            <Route path="/" element={<Home />} />
 
-          {/* Public Routes */}
-          <Route path="/role" element={<RoleSelection />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/emergency/:patientId" element={<EmergencyLink />} />
+            {/* Public Routes */}
+            <Route path="/role" element={<RoleSelection />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/emergency/:patientId" element={<EmergencyLink />} />
 
-          {/* Legal Pages */}
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/cookies" element={<CookiePolicy />} />
+            {/* Legal Pages */}
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
 
-          {/* Caregiver Dashboard */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute expectedRole="caregiver">
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/insights"
-            element={
-              <PrivateRoute expectedRole="caregiver">
-                <Insights />
-              </PrivateRoute>
-            }
-          />
+            {/* Caregiver Dashboard */}
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute expectedRole="caregiver">
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/insights"
+              element={
+                <PrivateRoute expectedRole="caregiver">
+                  <Insights />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Settings */}
-          <Route
-            path="/settings"
-            element={
-              <PrivateRoute expectedRole="caregiver">
-                <Settings />
-              </PrivateRoute>
-            }
-          >
-            <Route path="profile" element={<Profile />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="reminders" element={<Reminders />} />
-            <Route path="security" element={<Security />} />
-            <Route path="family" element={<Family />} />
-            <Route path="emergency" element={<EmergencySettings />} />
-          </Route>
+            {/* Settings */}
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute expectedRole="caregiver">
+                  <Settings />
+                </PrivateRoute>
+              }
+            >
+              <Route path="profile" element={<Profile />} />
+              <Route path="notifications" element={<Notifications />} />
+              <Route path="reminders" element={<Reminders />} />
+              <Route path="security" element={<Security />} />
+              <Route path="family" element={<Family />} />
+              <Route path="emergency" element={<EmergencySettings />} />
+            </Route>
 
-          {/* Patient Dashboard */}
-          <Route
-            path="/patient-dashboard"
-            element={
-              <PrivateRoute expectedRole="patient">
-                <PatientDashboard />
-              </PrivateRoute>
-            }
-          />
+            {/* Patient Dashboard */}
+            <Route
+              path="/patient-dashboard"
+              element={
+                <PrivateRoute expectedRole="patient">
+                  <PatientDashboard />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Patient Connect */}
-          <Route
-            path="/connect"
-            element={
-              <PrivateRoute expectedRole="patient">
-                <PatientConnect />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </Suspense>
+            {/* Patient Connect */}
+            <Route
+              path="/connect"
+              element={
+                <PrivateRoute expectedRole="patient">
+                  <PatientConnect />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
+      </ToastProvider>
     </Router>
   );
 }

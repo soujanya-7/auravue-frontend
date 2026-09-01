@@ -17,11 +17,13 @@ import {
 } from 'firebase/firestore';
 import { generateFamilyCode } from '../utils/familyCode';
 import SEO from '../components/SEO';
+import { useToast } from '../context/ToastContext';
 import '../styles/Auth.css';
 
 export default function Register() {
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
   const role = new URLSearchParams(location.search).get('role') || 'caregiver';
 
   const [email, setEmail] = useState('');
@@ -50,16 +52,16 @@ export default function Register() {
         });
 
         await sendEmailVerification(user);
-        alert(`✅ Registered as Caregiver!\n📧 Verification email sent.\n👨‍👩‍👧 Family Code: ${familyCode}`);
+        toast.success(`Registered! Verification email sent. Family Code: ${familyCode}`, 7000);
         navigate('/login?role=caregiver');
       }
 
       else if (role === 'patient') {
-        const q = query(collection(db, 'caregivers'), where('familyCode', '==', enteredCode));
+        const q = query(collection(db, 'caregivers'), where('familyCode', '==', enteredCode.trim()));
         const snap = await getDocs(q);
 
         if (snap.empty) {
-          alert('❌ Invalid family code. Please check with your caregiver.');
+          toast.error('Invalid family code. Please check code with your caregiver.');
           return;
         }
 
@@ -72,7 +74,7 @@ export default function Register() {
           name,
           mobileNumber,
           role,
-          familyCode: enteredCode,
+          familyCode: enteredCode.trim(),
           authorizedCaregivers: [caregiverId],
           createdAt: new Date().toISOString()
         });
@@ -85,23 +87,23 @@ export default function Register() {
         });
 
         await sendEmailVerification(user);
-        alert(`🎉 You're now connected to caregiver: ${caregiverName}\n📧 A verification email has been sent.`);
+        toast.success(`Connected to caregiver ${caregiverName}! Verification email sent.`, 7000);
         navigate('/login?role=patient');
       }
     } catch (err) {
       console.error(err);
       switch (err.code) {
         case 'auth/email-already-in-use':
-          alert('❌ This email is already registered.');
+          toast.error('This email address is already registered.');
           break;
         case 'auth/invalid-email':
-          alert('❌ Invalid email format.');
+          toast.error('Invalid email address format.');
           break;
         case 'auth/weak-password':
-          alert('❌ Password must be at least 6 characters.');
+          toast.error('Password must be at least 6 characters.');
           break;
         default:
-          alert('❌ Registration failed: ' + err.message);
+          toast.error('Registration failed: ' + err.message);
       }
     }
   };

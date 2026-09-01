@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import "../styles/Home.css";
 import useCountUp from "../hooks/useCountUp";
+import Roadmap from "./Roadmap";
 
 import sosIcon from "../assets/sos.png";
 import pulseIcon from "../assets/pulse.png";
@@ -92,9 +93,6 @@ function Home() {
         </div>
 
         <div className="hero-text">
-          <div className="trust-badge-row">
-            <span className="live-pill"><span className="live-dot"></span> 24/7 Monitoring</span>
-          </div>
           <h1>Smart Health.<br />Safer Living.</h1>
           <p className="hero-desc">
             AuraVue is an intelligent wearable neckband that continuously monitors vitals,
@@ -109,11 +107,10 @@ function Home() {
                 See How It Works ↓
               </a>
             </div>
-            </div>
-            <p className="hero-micro-copy">No credit card required • Setup in 5 minutes</p>
+          </div>
 
-            {/* Embedded Stats (Moved from Hub) */}
-            <div className="stats-grid-minimal hero-stats">
+          {/* Embedded Stats */}
+          <div className="stats-grid-minimal hero-stats">
               <div className="stat-item-min">
                 <h3 ref={stat1.ref}>{stat1.count}{stat1.suffix}</h3>
                 <p>Elderly living alone globally</p>
@@ -198,32 +195,10 @@ function Home() {
 
 
 
-      {/* ⚙️ How It Works Section */}
-      <section id="how" className="how-it-works reveal">
-        <h2>How It Works</h2>
-        <div className="steps-grid">
-          <div className="step-card">
-            <div className="step-number">01</div>
-            <h3>Wear</h3>
-            <p>The elderly wears the lightweight AuraVue neckband — comfortable enough for 24/7 use with all-day battery life.</p>
-          </div>
-          <div className="step-card">
-            <div className="step-number">02</div>
-            <h3>Monitor</h3>
-            <p>AI continuously analyzes pulse patterns, movement data, and environmental context to build a health baseline.</p>
-          </div>
-          <div className="step-card">
-            <div className="step-number">03</div>
-            <h3>Detect</h3>
-            <p>Abnormal readings trigger instant alerts — the camera activates and GPS location is sent to registered caregivers.</p>
-          </div>
-          <div className="step-card">
-            <div className="step-number">04</div>
-            <h3>Respond</h3>
-            <p>Caregivers receive real-time dashboards with vitals, location, and camera feed. All data is logged securely for medical review.</p>
-          </div>
-        </div>
-      </section>
+      {/* ⚙️ Interactive Roadmap / How It Works */}
+      <div className="reveal">
+        <Roadmap />
+      </div>
 
       {/* ❓ FAQ Section */}
       <section className="faq reveal">
@@ -267,71 +242,164 @@ function Home() {
         </div>
       </section>
 
-      {/* 💙 About / CTA Section */}
+      {/* 💙 About / CTA Section: Futuristic Obsidian Glass Showcase */}
       <section id="about" className="cta reveal">
-        <h2>Protecting Lives with<br />Intelligent Technology</h2>
-        <p>
-          AuraVue combines AI-powered health telemetry with compassionate caregiving,
-          ensuring elderly individuals stay safe, connected, and supervised at all times —
-          reducing emergency response delay and improving quality of life.
-        </p>
-        <button className="btn-primary" onClick={handleGetStarted}>
-          Start Monitoring Today
-        </button>
-        <div className="trust-badges">
-          <div className="trust-badge">
-            <span className="trust-icon">🔒</span>
-            <span>HIPAA Compliant</span>
+        <div className="cta-glass-card">
+          <div className="cta-glow-orb" />
+          
+          <div className="cta-badge-tag">
+            <span className="cta-pulse-dot" /> Next-Gen AI Telemetry
           </div>
-          <div className="trust-badge">
-            <span className="trust-icon">🏥</span>
-            <span>Medical-Grade Sensors</span>
+
+          <h2 className="cta-title">
+            Protecting Lives with <span className="cta-cyan-text">Intelligent Care</span>
+          </h2>
+          
+          <p className="cta-subtitle">
+            AuraVue pairs real-time biometric telemetry with autonomous emergency protocols — ensuring elderly independence while giving caregivers continuous peace of mind.
+          </p>
+
+          <div className="cta-buttons-cluster">
+            <button className="btn-primary cta-btn-glow" onClick={handleGetStarted}>
+              Get Started with AuraVue →
+            </button>
+            <button
+              className="btn-secondary cta-btn-glass"
+              onClick={() => navigate('/role')}
+            >
+              Select Portal Role
+            </button>
           </div>
-          <div className="trust-badge">
-            <span className="trust-icon">⚡</span>
-            <span>Sub-3s Alert Latency</span>
-          </div>
-          <div className="trust-badge">
-            <span className="trust-icon">🌍</span>
-            <span>Live GPS Tracking</span>
+
+          <div className="cta-trust-grid">
+            <div className="trust-grid-card">
+              <div className="trust-grid-icon">🔒</div>
+              <div className="trust-grid-info">
+                <h4>HIPAA Compliant</h4>
+                <p>256-bit encrypted health data</p>
+              </div>
+            </div>
+
+            <div className="trust-grid-card">
+              <div className="trust-grid-icon">🏥</div>
+              <div className="trust-grid-info">
+                <h4>Medical Telemetry</h4>
+                <p>Continuous HRV & fall sensors</p>
+              </div>
+            </div>
+
+            <div className="trust-grid-card">
+              <div className="trust-grid-icon">⚡</div>
+              <div className="trust-grid-info">
+                <h4>&lt;3s Alert Dispatch</h4>
+                <p>Instant SMS & push routing</p>
+              </div>
+            </div>
+
+            <div className="trust-grid-card">
+              <div className="trust-grid-icon">🌍</div>
+              <div className="trust-grid-info">
+                <h4>Live GPS Geofence</h4>
+                <p>Real-time location safety ring</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 🖤 Footer */}
-      <footer>
+      {/* 🌌 Unique High-End Footer */}
+      <footer className="auravue-unique-footer">
+        <div className="footer-glow-divider" />
+
         <div className="footer-grid">
+          {/* Brand & Mission */}
           <div className="footer-brand">
-            <h3>AuraVue</h3>
-            <p>AI-powered health monitoring system designed to protect elderly individuals living independently, ensuring safety through intelligent prediction and real-time caregiver connectivity.</p>
+            <h3 className="footer-logo">
+              Aura<span>Vue</span>
+            </h3>
+            <p>
+              Next-generation AI health monitoring ecosystem ensuring elderly independence, real-time vital telemetry, and instant caregiver emergency response.
+            </p>
+            <div className="footer-status-pill">
+              <span className="status-indicator-dot" />
+              <span>Network Status: All Systems Operational</span>
+            </div>
           </div>
+
+          {/* Column 1: Core Technology */}
           <div className="footer-col">
-            <h4>Product</h4>
-            <a href="#features">Key Features</a>
-            <a href="#how">How It Works</a>
-            <a href="#problem">Why AuraVue</a>
-            <a href="#about">About Us</a>
+            <h4>Technology</h4>
+            <a href="#features">AI Vital Monitor</a>
+            <a href="#features">Fall Detection IMU</a>
+            <a href="#how">Smart Neckband Telemetry</a>
+            <a href="#problem">Cardiovascular Stability</a>
+            <a href="#about">Family Circle Sync</a>
           </div>
+
+          {/* Column 2: Quick Portals */}
           <div className="footer-col">
-            <h4>Resources</h4>
-            <a href="#">Documentation</a>
-            <a href="#">API Reference</a>
-            <a href="#">Caregiver Guide</a>
-            <a href="#">Release Notes</a>
+            <h4>Portals</h4>
+            <Link to="/role">Select Portal Role</Link>
+            <Link to="/login?role=caregiver">Caregiver Command Center</Link>
+            <Link to="/login?role=patient">Patient Health Hub</Link>
+            <Link to="/connect">Device Bluetooth Pairing</Link>
+            <Link to="/register">Create Family Account</Link>
           </div>
-          <div className="footer-col">
-            <h4>Contact</h4>
-            <p className="footer-contact-item">📧 support@auravue.health</p>
-            <p className="footer-contact-item">📞 +91 86105 31594 (24/7 Support)</p>
-            <p className="footer-contact-item">📍 India HQ</p>
+
+          {/* Column 3: Emergency & Assistance Card */}
+          <div className="footer-col footer-emergency-card">
+            <h4>24/7 Care & Support</h4>
+            <div className="footer-contact-box">
+              <div className="contact-row">
+                <span className="contact-icon">📞</span>
+                <div>
+                  <span className="contact-label">24/7 Care Helpline</span>
+                  <a href="tel:+918610531594" className="contact-val">+91 86105 31594</a>
+                </div>
+              </div>
+              <div className="contact-row">
+                <span className="contact-icon">📧</span>
+                <div>
+                  <span className="contact-label">Emergency Desk</span>
+                  <a href="mailto:support@auravue.health" className="contact-val">support@auravue.health</a>
+                </div>
+              </div>
+              <div className="contact-row">
+                <span className="contact-icon">🛡️</span>
+                <div>
+                  <span className="contact-label">Security Protocol</span>
+                  <span className="contact-val" style={{ color: 'rgba(255,255,255,0.7)' }}>256-Bit Encrypted Data</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Bottom Bar */}
         <div className="footer-bottom">
-          <p>© 2026 AuraVue. All Rights Reserved. Built with ❤️ for elderly safety.</p>
+          <p>© 2026 AuraVue Health Inc. All Rights Reserved. Engineered for elderly safety & peace of mind.</p>
           <div className="footer-bottom-links">
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Service</Link>
             <Link to="/cookies">Cookie Policy</Link>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="back-to-top-btn"
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#00e6e6',
+                cursor: 'pointer',
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                padding: 0,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              Back to Top ↑
+            </button>
           </div>
         </div>
       </footer>
@@ -340,3 +408,4 @@ function Home() {
 }
 
 export default Home;
+

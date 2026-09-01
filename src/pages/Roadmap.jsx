@@ -6,10 +6,30 @@ import fallIcon from "../assets/fall.png";
 import cameraIcon from "../assets/camera.png";
 
 const steps = [
-  { icon: sosIcon, title: "Connect Device", desc: "Pairs seamlessly with the AuraVue app." },
-  { icon: pulseIcon, title: "Monitor Health", desc: "Vitals are continuously monitored." },
-  { icon: fallIcon, title: "Trigger Alerts", desc: "Alerts are triggered for abnormalities." },
-  { icon: cameraIcon, title: "Emergency Response", desc: "Caregivers notified immediately." },
+  {
+    step: "01",
+    icon: sosIcon,
+    title: "Wear & Connect",
+    desc: "Seamlessly pairs the smart neckband monitor with the caregiver cloud hub."
+  },
+  {
+    step: "02",
+    icon: pulseIcon,
+    title: "Continuous AI Tracking",
+    desc: "100Hz real-time telemetry streams heart rate, HRV, body temp, and SpO2."
+  },
+  {
+    step: "03",
+    icon: fallIcon,
+    title: "Instant Anomaly Detection",
+    desc: "6-axis IMU and edge AI models detect falls and cardiac irregularities in <3s."
+  },
+  {
+    step: "04",
+    icon: cameraIcon,
+    title: "Caregiver Emergency Dispatch",
+    desc: "Automated SOS triggers SMS, GPS location broadcast, and voice channel."
+  },
 ];
 
 const Roadmap = () => {
@@ -17,61 +37,41 @@ const Roadmap = () => {
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
+    const node = roadmapRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setInView(true);
       },
-      { threshold: 0.3 } // trigger when 30% visible
+      { threshold: 0.2 }
     );
 
-    if (roadmapRef.current) observer.observe(roadmapRef.current);
+    if (node) observer.observe(node);
 
     return () => {
-      if (roadmapRef.current) observer.unobserve(roadmapRef.current);
+      if (node) observer.unobserve(node);
     };
   }, []);
 
   return (
-    <section className="roadmap-section" ref={roadmapRef}>
-      <h2 className="roadmap-heading">How We Work</h2>
-      <div className="roadmap-wrapper">
-        <svg
-          className={`road-svg ${inView ? "animate-road" : ""}`}
-          viewBox="0 0 1200 200"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <path
-            d="M0 100 C200 0, 400 200, 600 100 C800 0, 1000 200, 1200 100"
-            fill="transparent"
-            stroke="#4f7f62"
-            strokeWidth="12"
-            strokeLinecap="round"
-          />
-        </svg>
+    <section className="roadmap-section" ref={roadmapRef} id="how">
+      <div className="roadmap-header">
+        <h2 className="roadmap-heading">How AuraVue Works</h2>
+        <p className="roadmap-subtitle">
+          From wearable edge sensors to emergency response in four intelligent steps.
+        </p>
+      </div>
 
-        {steps.map((step, index) => {
-          const percentages = [0.05, 0.35, 0.65, 0.95];
-          const yOffsets = [40, 160, 40, 160];
-          return (
-            <div
-              key={index}
-              className="roadmap-step"
-              style={{
-                left: `${percentages[index] * 100}%`,
-                top: `${yOffsets[index]}px`,
-              }}
-            >
-              <div className="step-circle">
-                <img src={step.icon} alt={step.title} />
-              </div>
-              <div className="step-content">
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
-              </div>
-              <div className={`connector-line ${index % 2 === 0 ? "up" : "down"}`}></div>
+      <div className={`roadmap-grid ${inView ? "in-view" : ""}`}>
+        {steps.map((step, index) => (
+          <div key={index} className="roadmap-card-v2">
+            <div className="roadmap-step-badge">{step.step}</div>
+            <div className="roadmap-icon-wrapper">
+              <img src={step.icon} alt={step.title} className="roadmap-icon-img" />
             </div>
-          );
-        })}
+            <h3 className="roadmap-card-title">{step.title}</h3>
+            <p className="roadmap-card-desc">{step.desc}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

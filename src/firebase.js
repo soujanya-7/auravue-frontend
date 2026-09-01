@@ -44,7 +44,14 @@ const storage = getStorage(app);
 // Functions
 const functions = getFunctions(app);
 
-// Messaging
-const messaging = getMessaging(app);
+// Messaging (safe initialization for SSR/testing/unsupported environments)
+let messaging = null;
+if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+  try {
+    messaging = getMessaging(app);
+  } catch (err) {
+    // Unsupported or restricted environment
+  }
+}
 
 export { app, auth, googleProvider, db, rtdb, storage, functions, messaging };

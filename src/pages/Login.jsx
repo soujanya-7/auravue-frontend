@@ -10,11 +10,13 @@ import {
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import SEO from '../components/SEO';
+import { useToast } from '../context/ToastContext';
 import '../styles/Auth.css';
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
 
   const [role, setRole] = useState('caregiver');
   const [email, setEmail] = useState('');
@@ -44,7 +46,7 @@ export default function Login() {
       if (!user.emailVerified) {
         setUnverifiedUser(user);
         setShowResend(true);
-        alert('❌ Please verify your email before logging in.');
+        toast.warning('Please verify your email address before logging in.');
         setLoading(false);
         return;
       }
@@ -64,7 +66,7 @@ export default function Login() {
 
       if (!actualRole) {
         await signOut(auth);
-        alert('❌ No role assigned. Please contact support.');
+        toast.error('No account role assigned. Please contact support.');
         setLoading(false);
         return;
       }
@@ -72,13 +74,14 @@ export default function Login() {
       // 🔹 If role mismatch — block login
       if (actualRole !== role) {
         await signOut(auth);
-        alert(`❌ You are registered as a ${actualRole}. Please log in using the ${actualRole} role.`);
+        toast.error(`You are registered as a ${actualRole}. Please select the ${actualRole} login.`);
         setLoading(false);
         return;
       }
 
       // ✅ Store role for later
       localStorage.setItem('userRole', actualRole);
+      toast.success(`Welcome back to AuraVue!`);
 
       // ✅ Navigate to correct dashboard
       if (actualRole === 'caregiver') {
@@ -89,9 +92,9 @@ export default function Login() {
 
     } catch (err) {
       console.error(err);
-      alert(err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password'
-        ? '❌ Invalid email or password'
-        : '❌ Login failed. Please try again.');
+      toast.error(err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential'
+        ? 'Invalid email or password.'
+        : 'Login failed. Please verify credentials.');
     } finally {
       setLoading(false);
     }
@@ -101,25 +104,26 @@ export default function Login() {
     if (!unverifiedUser) return;
     try {
       await sendEmailVerification(unverifiedUser);
-      alert('📨 Verification email resent! Please check inbox or spam.');
+      toast.success('Verification email sent! Check your inbox or spam folder.');
     } catch (err) {
       console.error(err);
-      alert('❌ Failed to resend verification email.');
+      toast.error('Failed to resend verification email.');
     }
   };
 
   const handleForgotPassword = async () => {
     if (!email) {
-      alert('Please enter your email address above first.');
+      toast.warning('Please enter your email address in the field above.');
       return;
     }
     setResetLoading(true);
     try {
       await sendPasswordResetEmail(auth, email);
       setResetSent(true);
+      toast.success('Password reset email sent!');
     } catch (err) {
       console.error(err);
-      alert('❌ Could not send reset email. Make sure the address is correct.');
+      toast.error('Could not send reset email. Ensure the address is correct.');
     } finally {
       setResetLoading(false);
     }

@@ -28,18 +28,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -rf build && npx react-scripts build",
-    "postbuild": "react-snap",
+    "build": "react-scripts build",
     "deploy": "npm run build && firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "reactSnap": {
-    "skipThirdPartyRequests": true,
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ]
+  "jest": {
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^react-router$": "<rootDir>/node_modules/react-router/dist/development/index.js"
+    }
   },
   "homepage": "/",
   "eslintConfig": {

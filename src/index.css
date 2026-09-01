@@ -1,26 +1,50 @@
 :root {
-  /* Accessibility tokens */
-  --a11y-text-base: 18px;
-  /* Larger base font for elderly audience */
-  --a11y-tap-target: 48px;
-  /* Larger minimum tap targets */
-  --a11y-contrast-high: #ffffff;
-  --a11y-contrast-dark: #050a0f;
-  --a11y-focus-ring: 3px solid #00e6e6;
+  /* Accessibility & Typography */
+  --a11y-text-base: 16px;
+  --a11y-tap-target: 44px;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Color Palette - AuraVue Cyan & Obsidian Dark Theme */
+  --bg-primary: #050b11;
+  --bg-secondary: #0a1622;
+  --bg-surface: #0e2030;
+  
+  --accent-cyan: #00e6e6;
+  --accent-cyan-glow: rgba(0, 230, 230, 0.35);
+  --accent-emerald: #00e699;
+  --accent-amber: #ffb703;
+  --accent-coral: #ff4d6d;
+  --accent-sos: #ff2a5f;
+  
+  /* Glassmorphism Tokens */
+  --glass-bg: rgba(14, 32, 48, 0.65);
+  --glass-bg-hover: rgba(18, 42, 64, 0.75);
+  --glass-border: rgba(0, 230, 230, 0.14);
+  --glass-border-bright: rgba(0, 230, 230, 0.32);
+  --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  /* Text & Contrast */
+  --text-main: #ffffff;
+  --text-muted: rgba(170, 195, 210, 0.75);
+  --text-subtle: rgba(140, 170, 190, 0.5);
+
+  --a11y-focus-ring: 3px solid var(--accent-cyan);
 }
 
 html {
   font-size: var(--a11y-text-base);
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* Accessibility Focus States */
@@ -29,18 +53,73 @@ body {
   outline-offset: 2px;
 }
 
-/* Base button and link tap targets */
+/* Button Reset & Tap Targets */
 button,
-a {
+.btn,
+.btn-primary,
+.btn-secondary,
+.action-btn {
   min-height: var(--a11y-tap-target);
-  min-width: var(--a11y-tap-target);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-family: inherit;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Toast Notification Keyframes */
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastProgress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 230, 230, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(0, 230, 230, 0.5);
+  }
+}
+
+@keyframes sosFlash {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 42, 95, 0.3);
+    border-color: rgba(255, 42, 95, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 42, 95, 0.85);
+    border-color: rgba(255, 42, 95, 0.9);
+  }
 }

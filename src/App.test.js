@@ -1,8 +1,10 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders AuraVue navigation and brand logo', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const brandElements = await screen.findAllByText(/Aura/i);
+  expect(brandElements.length).toBeGreaterThan(0);
 });
+
