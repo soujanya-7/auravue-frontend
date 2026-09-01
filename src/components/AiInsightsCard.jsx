@@ -1,15 +1,62 @@
-import React from 'react';
-import { FaBrain, FaCheckCircle, FaExclamationTriangle, FaHeartbeat, FaWalking } from 'react-icons/fa';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  FaBrain,
+  FaCheckCircle,
+  FaExclamationTriangle,
+  FaHeartbeat,
+  FaWalking,
+  FaSyncAlt,
+  FaShieldAlt,
+  FaNotesMedical
+} from 'react-icons/fa';
+import { analyzePatientHealthWithAi } from '../services/geminiService';
 
 const AiInsightsCard = ({
+  patientName = 'Patient',
+  pulse = 72,
+  spO2 = 98,
+  temp = 36.6,
+  bp = '120/80',
   stability = 95,
   activityLevel = 'Resting',
   activityPct = 25,
   rhythmScore = 96,
-  anomalyText = null
+  anomalyText = null,
+  medications = []
 }) => {
-  const isHealthy = stability >= 80;
-  const statusColor = isHealthy ? '#00e699' : stability >= 55 ? '#ffb703' : '#ff4d6d';
+  const [isScanning, setIsScanning] = useState(false);
+  const [assessment, setAssessment] = useState(null);
+
+  const runAiDiagnosticScan = useCallback(async () => {
+    setIsScanning(true);
+    try {
+      const result = await analyzePatientHealthWithAi({
+        patientName,
+        pulse,
+        spO2,
+        temp,
+        bp,
+        stability,
+        activityLevel,
+        medications
+      });
+      setAssessment(result);
+    } catch (err) {
+      console.error('Failed to run AI assessment:', err);
+    } finally {
+      setIsScanning(false);
+    }
+  }, [patientName, pulse, spO2, temp, bp, stability, activityLevel, medications]);
+
+  // Initial assessment on load
+  useEffect(() => {
+    runAiDiagnosticScan();
+  }, [runAiDiagnosticScan]);
+
+  const riskLevel = assessment?.riskLevel || (stability >= 80 ? 'Optimal' : stability >= 55 ? 'Moderate Concern' : 'Critical Alert');
+  const isHealthy = riskLevel === 'Optimal';
+  const isCritical = riskLevel === 'Critical Alert';
+  const statusColor = isHealthy ? '#00e699' : isCritical ? '#ff4d6d' : '#ffb703';
 
   return (
     <div
@@ -22,67 +69,112 @@ const AiInsightsCard = ({
         boxShadow: 'var(--glass-shadow, 0 16px 40px rgba(0,0,0,0.45))',
         display: 'flex',
         flexDirection: 'column',
-        gap: '1.2rem'
+        gap: '1.2rem',
+        position: 'relative'
       }}
     >
+      {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
           <FaBrain style={{ color: '#00e6e6', fontSize: '1.3rem' }} />
-          <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: '#ffffff' }}>
-            AI Health Diagnostics
+          <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary, #ffffff)' }}>
+            Gemini AI Diagnostics
           </h3>
         </div>
-        <span
+        <button
+          onClick={runAiDiagnosticScan}
+          disabled={isScanning}
           style={{
             fontSize: '0.75rem',
             fontWeight: 700,
-            padding: '0.25rem 0.65rem',
+            padding: '0.3rem 0.75rem',
             borderRadius: '12px',
-            background: 'rgba(0, 230, 230, 0.12)',
+            background: isScanning ? 'rgba(0, 230, 230, 0.25)' : 'rgba(0, 230, 230, 0.12)',
             color: '#00e6e6',
-            border: '1px solid rgba(0, 230, 230, 0.25)'
+            border: '1px solid rgba(0, 230, 230, 0.25)',
+            cursor: isScanning ? 'wait' : 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            transition: 'all 0.2s'
           }}
+          title="Re-run live AI clinical evaluation"
         >
-          Model v2.4 Active
-        </span>
+          <FaSyncAlt style={{ animation: isScanning ? 'spin 1s linear infinite' : 'none' }} />
+          {isScanning ? 'Analyzing...' : 'Run Scan'}
+        </button>
       </div>
 
       {/* Main Status Headline */}
       <div
         style={{
-          padding: '1rem',
-          borderRadius: '14px',
+          padding: '1.1rem',
+          borderRadius: '16px',
           background: `${statusColor}12`,
           border: `1px solid ${statusColor}35`,
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           gap: '0.85rem'
         }}
       >
         {isHealthy ? (
-          <FaCheckCircle style={{ color: statusColor, fontSize: '1.4rem', flexShrink: 0 }} />
+          <FaCheckCircle style={{ color: statusColor, fontSize: '1.4rem', flexShrink: 0, marginTop: '2px' }} />
         ) : (
-          <FaExclamationTriangle style={{ color: statusColor, fontSize: '1.4rem', flexShrink: 0 }} />
+          <FaExclamationTriangle style={{ color: statusColor, fontSize: '1.4rem', flexShrink: 0, marginTop: '2px' }} />
         )}
-        <div>
-          <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#ffffff' }}>
-            {isHealthy ? 'Optimal Cardiovascular Stability' : 'Irregular Variance Detected'}
-          </h4>
-          <p style={{ margin: '0.15rem 0 0', fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.7)' }}>
-            {anomalyText || (isHealthy ? 'Pulse & HRV stay within standard baseline parameters.' : 'Pulse fluctuation exceeds standard thresholds.')}
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+            <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary, #ffffff)' }}>
+              {assessment?.riskLevel || (isHealthy ? 'Optimal Cardiovascular Stability' : 'Irregular Variance Detected')}
+            </h4>
+            {assessment?.confidenceScore && (
+              <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
+                {assessment.confidenceScore}% Confidence
+              </span>
+            )}
+          </div>
+          <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary, rgba(255, 255, 255, 0.8))', lineHeight: 1.5 }}>
+            {assessment?.summary || anomalyText || (isHealthy ? 'Pulse & HRV stay within standard baseline parameters.' : 'Pulse fluctuation exceeds standard thresholds.')}
           </p>
         </div>
       </div>
+
+      {/* AI Caregiver Action Recommendations */}
+      {assessment?.recommendations?.length > 0 && (
+        <div
+          style={{
+            padding: '0.9rem 1.1rem',
+            borderRadius: '14px',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem'
+          }}
+        >
+          <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#00e6e6', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <FaNotesMedical /> Caregiver Action Protocol
+          </span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            {assessment.recommendations.map((rec, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary, rgba(255, 255, 255, 0.75))', lineHeight: 1.4 }}>
+                <span style={{ color: '#00e699', fontWeight: 700 }}>•</span>
+                <span>{rec}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Metrics Breakdown */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
         {/* Stability Metric */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '0.35rem' }}>
-            <span style={{ color: 'rgba(255, 255, 255, 0.75)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <span style={{ color: 'var(--text-secondary, rgba(255, 255, 255, 0.75))', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <FaHeartbeat style={{ color: '#00e6e6' }} /> Cardiac Rhythm Regularity
             </span>
-            <span style={{ fontWeight: 700, color: '#ffffff' }}>{Math.round(rhythmScore)}%</span>
+            <span style={{ fontWeight: 700, color: 'var(--text-primary, #ffffff)' }}>{Math.round(rhythmScore)}%</span>
           </div>
           <div style={{ height: '7px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden' }}>
             <div
@@ -100,10 +192,10 @@ const AiInsightsCard = ({
         {/* Activity Metric */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '0.35rem' }}>
-            <span style={{ color: 'rgba(255, 255, 255, 0.75)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <span style={{ color: 'var(--text-secondary, rgba(255, 255, 255, 0.75))', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <FaWalking style={{ color: '#ff7eb3' }} /> Movement / Activity State
             </span>
-            <span style={{ fontWeight: 700, color: '#ffffff' }}>{activityLevel} ({activityPct}%)</span>
+            <span style={{ fontWeight: 700, color: 'var(--text-primary, #ffffff)' }}>{activityLevel} ({activityPct}%)</span>
           </div>
           <div style={{ height: '7px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '4px', overflow: 'hidden' }}>
             <div
@@ -118,8 +210,17 @@ const AiInsightsCard = ({
           </div>
         </div>
       </div>
+
+      {/* Model Footnote */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.7rem', color: 'rgba(255,255,255,0.45)', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '0.6rem' }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+          <FaShieldAlt style={{ color: '#00e6e6' }} /> {assessment?.source || 'Gemini 1.5 Clinical Telemetry'}
+        </span>
+        <span>{assessment?.timestamp ? `Evaluated at ${assessment.timestamp}` : 'Continuous Monitoring'}</span>
+      </div>
     </div>
   );
 };
 
 export default AiInsightsCard;
+

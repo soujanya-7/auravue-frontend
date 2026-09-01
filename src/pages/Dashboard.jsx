@@ -680,6 +680,11 @@ const Dashboard = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {/* AI Health Diagnostics Card */}
             <AiInsightsCard
+              patientName={patientName || 'Patient'}
+              pulse={pulse}
+              spO2={spo2}
+              temp={temp}
+              bp={bp}
               stability={aiStats.stability}
               activityLevel={aiStats.activityLevel}
               activityPct={aiStats.activity}
