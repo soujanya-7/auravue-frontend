@@ -99,144 +99,187 @@
 /* ☀️ Comprehensive Light Mode Design System */
 /* ===================== */
 body.light-mode {
-  background: #f4f8fb;
-  color: #1a2e3b;
+  background: #f8fafc;
+  color: #0f172a;
 }
 
 body.light-mode .auravue-home {
-  background: linear-gradient(180deg, #f4f8fb 0%, #ebf3f7 50%, #e2edf3 100%);
-  color: #1a2e3b;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 40%, #e2e8f0 100%);
+  color: #0f172a;
 }
 
 body.light-mode .navbar {
-  background: rgba(244, 248, 251, 0.88);
-  border-bottom: 1px solid rgba(0, 150, 150, 0.15);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  background: rgba(248, 250, 252, 0.92);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
 }
 
 body.light-mode .navbar-scrolled {
-  background: rgba(244, 248, 251, 0.96);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.07);
 }
 
 body.light-mode .logo {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .logo span {
-  color: #008f8f;
+  color: #0891b2;
   text-shadow: none;
 }
 
 body.light-mode .nav-links a {
-  color: #436273;
+  color: #475569;
 }
 
 body.light-mode .nav-links a:hover,
 body.light-mode .nav-links a.nav-active {
-  color: #008f8f;
+  color: #0891b2;
 }
 
 body.light-mode .theme-toggle {
-  border-color: rgba(0, 143, 143, 0.25);
-  background: rgba(0, 143, 143, 0.08);
-  color: #0d1e2b;
+  border-color: #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
 body.light-mode .hero-text h1 {
-  background: linear-gradient(135deg, #0d1e2b 0%, #008f8f 60%, #00b3b3 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0891b2 60%, #06b6d4 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 body.light-mode .hero-desc {
-  color: #4b6b7c;
+  color: #475569;
 }
 
 body.light-mode .hero-cta-glass {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 143, 143, 0.18);
-  box-shadow: 0 10px 30px rgba(0, 40, 60, 0.06);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
 }
 
 body.light-mode .btn-secondary {
-  color: #008f8f;
-  border-color: rgba(0, 143, 143, 0.35);
-  background: rgba(0, 143, 143, 0.06);
+  color: #0891b2;
+  border-color: #cbd5e1;
+  background: #ffffff;
 }
 
 body.light-mode .btn-secondary:hover {
-  background: rgba(0, 143, 143, 0.12);
-  border-color: #008f8f;
-  color: #007070;
+  background: #f0fdfa;
+  border-color: #0891b2;
+  color: #0e7490;
 }
 
 body.light-mode .stat-item-min h3 {
-  color: #008f8f;
+  color: #0891b2;
   text-shadow: none;
 }
 
 body.light-mode .stat-item-min p {
-  color: #5d7e8e;
+  color: #64748b;
 }
 
 body.light-mode .hero-stats,
 body.light-mode .stats-grid-minimal {
-  border-top-color: rgba(0, 143, 143, 0.12);
+  border-top-color: #e2e8f0;
+}
+
+body.light-mode .orbit-system .central-hub {
+  background: radial-gradient(circle, rgba(8, 145, 178, 0.12) 0%, transparent 70%);
+  box-shadow: 0 0 50px rgba(8, 145, 178, 0.1);
+}
+
+body.light-mode .orbit-path {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode .orbit-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode .orbit-item img {
+  opacity: 0.85;
+}
+
+body.light-mode .orbit-item:hover {
+  border-color: #0891b2;
+  background: #f0fdfa;
+  box-shadow: 0 12px 30px rgba(8, 145, 178, 0.15);
+}
+
+body.light-mode .tech-badges {
+  background: transparent;
+}
+
+body.light-mode .tech-badge {
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+body.light-mode .tech-badge:hover {
+  color: #0891b2;
+  border-color: #0891b2;
+}
+
+body.light-mode .tech-dot {
+  color: #cbd5e1;
 }
 
 body.light-mode .feature-card,
 body.light-mode .step-card,
-body.light-mode .roadmap-card-v2,
 body.light-mode .problem-point {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 143, 143, 0.14);
-  box-shadow: 0 8px 24px rgba(0, 40, 60, 0.05);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
 }
 
 body.light-mode .feature-card h3,
-body.light-mode .problem-point h4,
-body.light-mode .roadmap-card-v2 h3 {
-  color: #0d1e2b;
+body.light-mode .problem-point h4 {
+  color: #0f172a;
 }
 
 body.light-mode .feature-card p,
-body.light-mode .problem-point p,
-body.light-mode .roadmap-card-v2 p {
-  color: #4b6b7c;
+body.light-mode .problem-point p {
+  color: #475569;
 }
 
 body.light-mode .faq-item {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 143, 143, 0.14);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
 }
 
 body.light-mode .faq-question h3 {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .faq-answer p {
-  color: #4b6b7c;
+  color: #475569;
 }
 
 body.light-mode .cta {
-  background: radial-gradient(circle at 50% 20%, rgba(0, 143, 143, 0.08) 0%, #ebf3f7 80%);
+  background: radial-gradient(circle at 50% 20%, rgba(8, 145, 178, 0.06) 0%, #f1f5f9 80%);
 }
 
 body.light-mode .cta-glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 248, 252, 0.92) 100%);
-  border-color: rgba(0, 143, 143, 0.22);
-  box-shadow: 0 20px 60px rgba(0, 40, 60, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
 }
 
 body.light-mode .cta-title {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .cta-cyan-text {
-  background: linear-gradient(135deg, #008f8f 0%, #00b3b3 100%);
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -244,142 +287,150 @@ body.light-mode .cta-cyan-text {
 }
 
 body.light-mode .cta-subtitle {
-  color: #4b6b7c;
+  color: #475569;
 }
 
 body.light-mode .cta-badge-tag {
-  background: rgba(0, 143, 143, 0.08);
-  border-color: rgba(0, 143, 143, 0.25);
-  color: #008f8f;
+  background: #f0fdfa;
+  border: 1px solid rgba(8, 145, 178, 0.25);
+  color: #0891b2;
 }
 
 body.light-mode .cta-pulse-dot {
-  background: #008f8f;
-  box-shadow: 0 0 8px #008f8f;
+  background: #0891b2;
+  box-shadow: 0 0 8px #0891b2;
 }
 
 body.light-mode .cta-btn-glass {
-  background: rgba(0, 143, 143, 0.06);
-  border-color: rgba(0, 143, 143, 0.25);
-  color: #007a7a;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+body.light-mode .cta-btn-glass:hover {
+  background: #f0fdfa;
+  border-color: #0891b2;
+  color: #0891b2;
 }
 
 body.light-mode .cta-trust-grid {
-  border-top-color: rgba(0, 143, 143, 0.12);
+  border-top-color: #e2e8f0;
 }
 
 body.light-mode .trust-grid-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(0, 143, 143, 0.15);
-  box-shadow: 0 4px 15px rgba(0, 40, 60, 0.04);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
 }
 
 body.light-mode .trust-grid-icon {
-  background: rgba(0, 143, 143, 0.08);
-  border-color: rgba(0, 143, 143, 0.2);
+  background: #ffffff;
+  border-color: #cbd5e1;
 }
 
 body.light-mode .trust-grid-info h4 {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .trust-grid-info p {
-  color: #5d7e8e;
+  color: #64748b;
 }
 
 body.light-mode .auravue-unique-footer {
-  background: #e2edf3;
-  color: #4b6b7c;
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+  color: #475569;
 }
 
 body.light-mode .footer-glow-divider {
-  background: linear-gradient(90deg, transparent, rgba(0, 143, 143, 0.3), rgba(0, 143, 143, 0.6), rgba(0, 143, 143, 0.3), transparent);
-  box-shadow: 0 0 10px rgba(0, 143, 143, 0.2);
+  background: linear-gradient(90deg, transparent, rgba(8, 145, 178, 0.3), rgba(8, 145, 178, 0.6), rgba(8, 145, 178, 0.3), transparent);
+  box-shadow: 0 0 10px rgba(8, 145, 178, 0.15);
 }
 
 body.light-mode .footer-logo {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .footer-logo span {
-  color: #008f8f;
+  color: #0891b2;
   text-shadow: none;
 }
 
 body.light-mode .footer-brand p {
-  color: #4b6b7c;
+  color: #64748b;
 }
 
 body.light-mode .footer-col h4 {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .footer-col h4::after {
-  background: #008f8f;
+  background: #0891b2;
 }
 
 body.light-mode .footer-col a {
-  color: #4b6b7c;
+  color: #64748b;
 }
 
 body.light-mode .footer-col a:hover {
-  color: #008f8f;
+  color: #0891b2;
   text-shadow: none;
 }
 
 body.light-mode .footer-contact-box {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(0, 143, 143, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 40, 60, 0.05);
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
 }
 
 body.light-mode .contact-icon {
-  background: rgba(0, 143, 143, 0.08);
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
 }
 
 body.light-mode .contact-label {
-  color: #6d8e9e;
+  color: #94a3b8;
 }
 
 body.light-mode .contact-val {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .contact-val:hover {
-  color: #008f8f;
+  color: #0891b2;
 }
 
 body.light-mode .footer-bottom {
-  border-top-color: rgba(0, 143, 143, 0.12);
+  border-top-color: #e2e8f0;
 }
 
 body.light-mode .footer-bottom p {
-  color: #6d8e9e;
+  color: #94a3b8;
 }
 
 body.light-mode .footer-bottom-links a {
-  color: #5d7e8e;
+  color: #64748b;
 }
 
 body.light-mode .footer-bottom-links a:hover {
-  color: #008f8f;
+  color: #0891b2;
 }
 
 body.light-mode .back-to-top-btn {
-  color: #008f8f !important;
+  color: #0891b2 !important;
 }
 
 body.light-mode .features-section h2,
 body.light-mode .problem-content h2,
 body.light-mode .roadmap-heading,
 body.light-mode .faq h2 {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .features-section .section-subtitle,
 body.light-mode .problem-content .section-subtitle,
 body.light-mode .roadmap-subtitle {
-  color: #4b6b7c;
+  color: #64748b;
 }
 
 /* ===================== */

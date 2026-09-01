@@ -120,40 +120,40 @@
 
 /* Light Mode Overrides */
 body.light-mode .roadmap-section {
-  background: radial-gradient(circle at 50% 20%, rgba(0, 143, 143, 0.08) 0%, #ebf3f7 80%);
+  background: radial-gradient(circle at 50% 20%, rgba(8, 145, 178, 0.05) 0%, #f8fafc 80%);
 }
 
 body.light-mode .roadmap-heading {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .roadmap-subtitle {
-  color: #4b6b7c;
+  color: #475569;
 }
 
 body.light-mode .roadmap-card-v2 {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 143, 143, 0.16);
-  box-shadow: 0 12px 32px rgba(0, 40, 60, 0.06);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
 }
 
 body.light-mode .roadmap-card-v2 h3 {
-  color: #0d1e2b;
+  color: #0f172a;
 }
 
 body.light-mode .roadmap-card-v2 p {
-  color: #4b6b7c;
+  color: #475569;
 }
 
 body.light-mode .roadmap-step-badge {
-  color: #008f8f;
-  background: rgba(0, 143, 143, 0.08);
-  border-color: rgba(0, 143, 143, 0.25);
+  color: #0891b2;
+  background: #f0fdfa;
+  border-color: rgba(8, 145, 178, 0.25);
 }
 
 body.light-mode .roadmap-icon-wrapper {
-  background: rgba(0, 143, 143, 0.08);
-  border-color: rgba(0, 143, 143, 0.2);
+  background: #f0fdfa;
+  border-color: rgba(8, 145, 178, 0.2);
 }
 
 @media (max-width: 768px) {
