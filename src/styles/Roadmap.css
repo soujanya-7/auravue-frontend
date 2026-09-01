@@ -114,8 +114,49 @@
 
 @media (max-width: 768px) {
   .roadmap-section {
-    padding: 4rem 1.2rem;
+    padding: 4rem 1.5rem;
   }
+}
+
+/* Light Mode Overrides */
+body.light-mode .roadmap-section {
+  background: radial-gradient(circle at 50% 20%, rgba(0, 143, 143, 0.08) 0%, #ebf3f7 80%);
+}
+
+body.light-mode .roadmap-heading {
+  color: #0d1e2b;
+}
+
+body.light-mode .roadmap-subtitle {
+  color: #4b6b7c;
+}
+
+body.light-mode .roadmap-card-v2 {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 143, 143, 0.16);
+  box-shadow: 0 12px 32px rgba(0, 40, 60, 0.06);
+}
+
+body.light-mode .roadmap-card-v2 h3 {
+  color: #0d1e2b;
+}
+
+body.light-mode .roadmap-card-v2 p {
+  color: #4b6b7c;
+}
+
+body.light-mode .roadmap-step-badge {
+  color: #008f8f;
+  background: rgba(0, 143, 143, 0.08);
+  border-color: rgba(0, 143, 143, 0.25);
+}
+
+body.light-mode .roadmap-icon-wrapper {
+  background: rgba(0, 143, 143, 0.08);
+  border-color: rgba(0, 143, 143, 0.2);
+}
+
+@media (max-width: 768px) {
   .roadmap-heading {
     font-size: 2rem;
   }

@@ -13,7 +13,18 @@ function Navbar() {
     const [userRole, setUserRole] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [darkMode, setDarkMode] = useState(true);
+    const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem("auravue_theme");
+        return saved ? saved === "dark" : true;
+    });
+
+    const handleToggleTheme = () => {
+        setDarkMode(prev => {
+            const next = !prev;
+            localStorage.setItem("auravue_theme", next ? "dark" : "light");
+            return next;
+        });
+    };
 
     const handleGetStarted = () => { navigate("/role"); setMenuOpen(false); };
 
@@ -143,8 +154,9 @@ function Navbar() {
                 )}
                 <button
                     className="theme-toggle"
-                    onClick={() => setDarkMode(!darkMode)}
+                    onClick={handleToggleTheme}
                     aria-label="Toggle theme"
+                    title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
                 >
                     {darkMode ? "☀️" : "🌙"}
                 </button>
