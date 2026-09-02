@@ -135,21 +135,84 @@ export default function Login() {
         title={`Login as ${role === 'patient' ? 'Patient' : 'Caregiver'}`}
         description="Securely access your AuraVue account to monitor health vitals or connect with caregivers."
       />
-      {/* --- Left Side: Branding Panel --- */}
+      {/* --- Left Side: Unique Interactive Telemetry Showcase --- */}
       <div className="auth-side-branding">
-        <div className="branding-content">
-          <h1 className="branding-logo">Aura<span>Vue</span></h1>
-          <p className="branding-tagline">
-            Smart Health Monitoring for {role === 'patient' ? 'Your Peace of Mind' : 'Better Patient Care'}.
+        <div className="telemetry-showcase-container">
+          <div className="telemetry-badge-tag">
+            <span className="telemetry-pulse-dot" />
+            {role === 'patient' ? 'Wearer Safety Shield' : 'Clinical Telemetry Hub'}
+          </div>
+
+          <h2 className="telemetry-headline">
+            {role === 'patient'
+              ? 'Autonomous Protection, Wherever You Go'
+              : 'Real-Time Biometrics & Instant Emergency Dispatch'}
+          </h2>
+
+          <p className="telemetry-subtext">
+            {role === 'patient'
+              ? 'Wear your smart neckband to stay safely connected with family, automated fall detection, and one-touch emergency response.'
+              : 'Monitor multi-patient vitals, track live GPS coordinates, and receive sub-3s AI fall alarms on your central command hub.'}
           </p>
+
+          {/* Live Telemetry Floating Metric Chips */}
+          <div className="telemetry-cards-stack">
+            <div className="auth-telemetry-chip chip-cardiac">
+              <div className="chip-icon-wrap icon-pulse">
+                ❤️
+              </div>
+              <div className="chip-info">
+                <div className="chip-label">Continuous Heart Rate</div>
+                <div className="chip-val">72 <small>BPM</small> • Stable</div>
+              </div>
+            </div>
+
+            <div className="auth-telemetry-chip chip-fall">
+              <div className="chip-icon-wrap icon-shield">
+                🛡️
+              </div>
+              <div className="chip-info">
+                <div className="chip-label">AI Fall & Anomaly Guard</div>
+                <div className="chip-val">&lt;3s Response Dispatched</div>
+              </div>
+            </div>
+
+            <div className="auth-telemetry-chip chip-sync">
+              <div className="chip-icon-wrap icon-sync">
+                📡
+              </div>
+              <div className="chip-info">
+                <div className="chip-label">Paramedic Life-Link</div>
+                <div className="chip-val">Encrypted • 24/7 Active</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* --- Right Side: Form Panel --- */}
       <div className="auth-side-form">
         <div className="auth-form-panel">
-          <h2>Welcome back</h2>
-          <p className="subtitle">Login to your {role} account</p>
+          {/* Role Switcher Tab */}
+          <div className="auth-role-tabs">
+            <button
+              type="button"
+              className={`role-tab-btn ${role === 'caregiver' ? 'active' : ''}`}
+              onClick={() => { setRole('caregiver'); navigate('/login?role=caregiver', { replace: true }); }}
+            >
+              👨‍⚕️ Caregiver
+            </button>
+            <button
+              type="button"
+              className={`role-tab-btn ${role === 'patient' ? 'active' : ''}`}
+              onClick={() => { setRole('patient'); navigate('/login?role=patient', { replace: true }); }}
+            >
+              👵 Patient
+            </button>
+          </div>
+
+          <h2>Welcome Back</h2>
+          <p className="subtitle">Sign in to your {role === 'patient' ? 'patient safety' : 'caregiver'} account</p>
 
           <form onSubmit={handleLogin}>
             <div className="input-group">
@@ -172,7 +235,7 @@ export default function Login() {
             </div>
 
             {/* Forgot Password */}
-            <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+            <div style={{ textAlign: 'right', marginBottom: '0.8rem' }}>
               {resetSent ? (
                 <span style={{ fontSize: '0.82rem', color: '#00e6e6' }}>
                   ✅ Reset email sent! Check your inbox.
@@ -194,13 +257,13 @@ export default function Login() {
             </div>
 
             <button type="submit" className="auth-btn" disabled={loading}>
-              {loading ? 'Logging in...' : 'Sign In'}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 
           {showResend && (
-            <div style={{ marginTop: '1.5rem' }}>
-              <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+            <div style={{ marginTop: '1.2rem' }}>
+              <p style={{ color: '#ff6b6b', fontSize: '0.85rem', marginBottom: '0.4rem' }}>
                 Your email is not verified.
               </p>
               <button onClick={resendVerification} className="google-btn">

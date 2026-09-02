@@ -114,23 +114,72 @@ export default function Register() {
         title={`Join AuraVue as ${role}`}
         description="Register for AuraVue to start intelligent health monitoring for yourself or your loved ones."
       />
-      {/* --- Left Side: Branding Panel --- */}
+      {/* --- Left Side: Unique Interactive Telemetry Showcase --- */}
       <div className="auth-side-branding">
-        <div className="branding-content">
-          <h1 className="branding-logo">Aura<span>Vue</span></h1>
-          <p className="branding-tagline">
+        <div className="telemetry-showcase-container">
+          <div className="telemetry-badge-tag">
+            <span className="telemetry-pulse-dot" />
+            {role === 'patient' ? 'Patient Safety Enrollment' : 'Caregiver Hub Setup'}
+          </div>
+
+          <h2 className="telemetry-headline">
             {role === 'patient'
-              ? 'Join our community and stay connected with your loved ones.'
-              : 'Empower your caregiving with advanced health insights.'}
+              ? 'Join the Autonomous Safety Network'
+              : 'Empower Your Caregiving with AI Insights'}
+          </h2>
+
+          <p className="telemetry-subtext">
+            {role === 'patient'
+              ? 'Connect directly to your family circle and receive 24/7 automated protection and medicine reminders.'
+              : 'Create your centralized clinical monitoring workspace with instant emergency triage and family sharing.'}
           </p>
+
+          {/* Live Telemetry Floating Metric Chips */}
+          <div className="telemetry-cards-stack">
+            <div className="auth-telemetry-chip chip-cardiac">
+              <div className="chip-icon-wrap icon-pulse">
+                ❤️
+              </div>
+              <div className="chip-info">
+                <div className="chip-label">Continuous Monitoring</div>
+                <div className="chip-val">100Hz Real-Time Telemetry</div>
+              </div>
+            </div>
+
+            <div className="auth-telemetry-chip chip-fall">
+              <div className="chip-icon-wrap icon-shield">
+                🛡️
+              </div>
+              <div className="chip-info">
+                <div className="chip-label">Autonomous Safety</div>
+                <div className="chip-val">Zero-Button Emergency Protocol</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* --- Right Side: Form Panel --- */}
       <div className="auth-side-form">
         <div className="auth-form-panel">
+          {/* Role Switcher Tab */}
+          <div className="auth-role-tabs">
+            <Link
+              to="/register?role=caregiver"
+              className={`role-tab-btn ${role === 'caregiver' ? 'active' : ''}`}
+            >
+              👨‍⚕️ Caregiver
+            </Link>
+            <Link
+              to="/register?role=patient"
+              className={`role-tab-btn ${role === 'patient' ? 'active' : ''}`}
+            >
+              👵 Patient
+            </Link>
+          </div>
+
           <h2>Create Account</h2>
-          <p className="subtitle">Join as a {role}</p>
+          <p className="subtitle">Sign up for your {role === 'patient' ? 'patient safety' : 'caregiver'} account</p>
 
           <form onSubmit={handleRegister}>
             <div className="input-group">
