@@ -68,6 +68,15 @@ function Home() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
+      }
+    }
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -193,7 +202,82 @@ function Home() {
         </div>
       </section>
 
+      {/* 💎 Features Section */}
+      <section id="features" className="features reveal">
+        <h2>Next-Gen Monitoring Features</h2>
+        <p className="features-subtitle">
+          Autonomous biomedical intelligence designed for continuous protection and zero false alarms.
+        </p>
+        <div className="feature-grid">
+          <div className="feature-card">
+            <img src={pulseIcon} alt="AI Vital Telemetry" />
+            <h3>AI Vital Telemetry</h3>
+            <p>
+              Continuous 100Hz heart rate, HRV variance, and thermal tracking with live arrhythmia warning triggers.
+            </p>
+          </div>
+          <div className="feature-card">
+            <img src={fallIcon} alt="Precision Fall IMU" />
+            <h3>Precision Fall IMU</h3>
+            <p>
+              6-axis spatial trajectory algorithms detect hard falls, slips, and collapses in under 3 seconds.
+            </p>
+          </div>
+          <div className="feature-card">
+            <img src={sosIcon} alt="Instant SOS Broadcast" />
+            <h3>Instant SOS Broadcast</h3>
+            <p>
+              Automated multi-channel dispatch dispatches SMS, push notifications, and phone calls to caregivers.
+            </p>
+          </div>
+          <div className="feature-card">
+            <img src={cameraIcon} alt="Emergency Visual Link" />
+            <h3>Emergency GPS & Visual</h3>
+            <p>
+              Real-time geofence tracking and secure public paramedic links ensure rapid first-responder routing.
+            </p>
+          </div>
+        </div>
+      </section>
 
+      {/* 🔴 Why AuraVue / Problem Section */}
+      <section id="problem" className="problem-section reveal">
+        <div className="problem-text">
+          <h2>Why Families Trust AuraVue</h2>
+          <p className="problem-highlight">
+            Over 37 million elderly individuals live alone globally. Traditional medical alert pendants fail when a senior is unconscious or unable to reach a button.
+          </p>
+          <div className="problem-points">
+            <div className="problem-point">
+              <span className="point-icon">⚡</span>
+              <div>
+                <h4>Autonomous Zero-Touch Protection</h4>
+                <p>
+                  No manual intervention required. If a senior collapses or experiences sudden cardiac distress, AuraVue triggers the emergency protocol automatically.
+                </p>
+              </div>
+            </div>
+            <div className="problem-point">
+              <span className="point-icon">🛡️</span>
+              <div>
+                <h4>Paramedic Life-Link Access</h4>
+                <p>
+                  Generates an instant, tokenized emergency link with real-time GPS coordinates, blood type, and medication allergies for emergency responders.
+                </p>
+              </div>
+            </div>
+            <div className="problem-point">
+              <span className="point-icon">👨‍👩‍👧</span>
+              <div>
+                <h4>Multi-Caregiver Family Circle</h4>
+                <p>
+                  Synchronizes live vitals, daily medicine adherence, and battery health simultaneously across family members and healthcare providers.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ⚙️ Interactive Roadmap / How It Works */}
       <div className="reveal">

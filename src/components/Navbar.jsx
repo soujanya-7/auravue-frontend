@@ -77,6 +77,19 @@ function Navbar() {
         setMenuOpen(false);
     };
 
+    const handleNavClick = (e, targetId) => {
+        e.preventDefault();
+        setMenuOpen(false);
+        if (location.pathname !== "/") {
+            navigate(`/#${targetId}`);
+        } else {
+            const el = document.getElementById(targetId);
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+    };
+
     return (
         <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
             <div className="navbar-left">
@@ -93,10 +106,10 @@ function Navbar() {
             <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
                 {isHome ? (
                     <>
-                        <li><a href="#features" onClick={() => setMenuOpen(false)}>Features</a></li>
-                        <li><a href="#problem" onClick={() => setMenuOpen(false)}>Why AuraVue</a></li>
-                        <li><a href="#how" onClick={() => setMenuOpen(false)}>How It Works</a></li>
-                        <li><a href="#about" onClick={() => setMenuOpen(false)}>About</a></li>
+                        <li><a href="#features" onClick={(e) => handleNavClick(e, "features")}>Features</a></li>
+                        <li><a href="#problem" onClick={(e) => handleNavClick(e, "problem")}>Why AuraVue</a></li>
+                        <li><a href="#how" onClick={(e) => handleNavClick(e, "how")}>How It Works</a></li>
+                        <li><a href="#about" onClick={(e) => handleNavClick(e, "about")}>About</a></li>
                     </>
                 ) : isDashboard && user ? (
                     <>
