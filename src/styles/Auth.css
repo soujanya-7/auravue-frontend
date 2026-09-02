@@ -383,7 +383,7 @@
   color: rgba(170, 195, 210, 0.75);
   font-size: 0.88rem;
   margin-top: 1.2rem;
-  margin-bottom: 0;
+  margin-bottom: 0.4rem;
 }
 
 .switch-link a {
@@ -396,6 +396,24 @@
 
 .switch-link a:hover {
   color: #a8f9ff;
+  text-decoration: underline;
+}
+
+.switch-role-subtle {
+  text-align: center;
+  margin: 0.4rem 0 0;
+}
+
+.switch-role-subtle a {
+  color: rgba(170, 195, 210, 0.55);
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.switch-role-subtle a:hover {
+  color: #00e6e6;
   text-decoration: underline;
 }
 

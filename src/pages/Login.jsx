@@ -188,26 +188,8 @@ export default function Login() {
       {/* --- Right Side: Form Panel --- */}
       <div className="auth-side-form">
         <div className="auth-form-panel">
-          {/* Role Switcher Tab */}
-          <div className="auth-role-tabs">
-            <button
-              type="button"
-              className={`role-tab-btn ${role === 'caregiver' ? 'active' : ''}`}
-              onClick={() => { setRole('caregiver'); navigate('/login?role=caregiver', { replace: true }); }}
-            >
-              Caregiver
-            </button>
-            <button
-              type="button"
-              className={`role-tab-btn ${role === 'patient' ? 'active' : ''}`}
-              onClick={() => { setRole('patient'); navigate('/login?role=patient', { replace: true }); }}
-            >
-              Patient
-            </button>
-          </div>
-
-          <h2>Welcome Back</h2>
-          <p className="subtitle">Sign in to your {role === 'patient' ? 'patient safety' : 'caregiver'} account</p>
+          <h2>{role === 'patient' ? 'Patient Login' : 'Caregiver Login'}</h2>
+          <p className="subtitle">Sign in to access your {role === 'patient' ? 'safety shield' : 'caregiver telemetry'}</p>
 
           <form onSubmit={handleLogin}>
             <div className="input-group">
@@ -280,6 +262,10 @@ export default function Login() {
           <p className="switch-link">
             New to AuraVue?{' '}
             <Link to={`/register?role=${role}`}>Create an account</Link>
+          </p>
+
+          <p className="switch-role-subtle">
+            <Link to="/role">‹ Switch role</Link>
           </p>
         </div>
       </div>

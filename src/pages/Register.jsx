@@ -167,24 +167,8 @@ export default function Register() {
       {/* --- Right Side: Form Panel --- */}
       <div className="auth-side-form">
         <div className="auth-form-panel">
-          {/* Role Switcher Tab */}
-          <div className="auth-role-tabs">
-            <Link
-              to="/register?role=caregiver"
-              className={`role-tab-btn ${role === 'caregiver' ? 'active' : ''}`}
-            >
-              Caregiver
-            </Link>
-            <Link
-              to="/register?role=patient"
-              className={`role-tab-btn ${role === 'patient' ? 'active' : ''}`}
-            >
-              Patient
-            </Link>
-          </div>
-
-          <h2>Create Account</h2>
-          <p className="subtitle">Sign up for your {role === 'patient' ? 'patient safety' : 'caregiver'} account</p>
+          <h2>{role === 'patient' ? 'Patient Registration' : 'Caregiver Registration'}</h2>
+          <p className="subtitle">Create your {role === 'patient' ? 'safety shield' : 'caregiver telemetry'} account</p>
 
           <form onSubmit={handleRegister}>
             <div className="input-group">
@@ -245,6 +229,10 @@ export default function Register() {
           <p className="switch-link">
             Already have an account?{' '}
             <Link to={`/login?role=${role}`}>Log in here</Link>
+          </p>
+
+          <p className="switch-role-subtle">
+            <Link to="/role">‹ Switch role</Link>
           </p>
         </div>
       </div>
