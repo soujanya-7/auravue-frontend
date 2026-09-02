@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { FaBolt, FaAmbulance, FaUsers } from "react-icons/fa";
 import SEO from "../components/SEO";
 import "../styles/Home.css";
 import useCountUp from "../hooks/useCountUp";
@@ -242,38 +243,46 @@ function Home() {
 
       {/* 🔴 Why AuraVue / Problem Section */}
       <section id="problem" className="problem-section reveal">
-        <div className="problem-text">
-          <h2>Why Families Trust AuraVue</h2>
-          <p className="problem-highlight">
-            Over 37 million elderly individuals live alone globally. Traditional medical alert pendants fail when a senior is unconscious or unable to reach a button.
-          </p>
-          <div className="problem-points">
-            <div className="problem-point">
-              <span className="point-icon">⚡</span>
-              <div>
-                <h4>Autonomous Zero-Touch Protection</h4>
-                <p>
-                  No manual intervention required. If a senior collapses or experiences sudden cardiac distress, AuraVue triggers the emergency protocol automatically.
-                </p>
+        <div className="problem-container">
+          <div className="problem-header">
+            <h2>Why Families <span className="cta-cyan-text">Trust AuraVue</span></h2>
+            <p className="problem-highlight">
+              Over 37 million elderly individuals live alone globally. Traditional medical alert pendants fail when a senior is unconscious or unable to reach a button.
+            </p>
+          </div>
+
+          <div className="problem-grid">
+            <div className="problem-card">
+              <div className="problem-card-num">01</div>
+              <div className="problem-icon-wrap">
+                <FaBolt className="problem-svg-icon" />
               </div>
+              <h4>Autonomous Zero-Touch Protection</h4>
+              <p>
+                No manual intervention required. If a senior collapses or experiences sudden cardiac distress, AuraVue triggers the emergency protocol automatically.
+              </p>
             </div>
-            <div className="problem-point">
-              <span className="point-icon">🛡️</span>
-              <div>
-                <h4>Paramedic Life-Link Access</h4>
-                <p>
-                  Generates an instant, tokenized emergency link with real-time GPS coordinates, blood type, and medication allergies for emergency responders.
-                </p>
+
+            <div className="problem-card">
+              <div className="problem-card-num">02</div>
+              <div className="problem-icon-wrap">
+                <FaAmbulance className="problem-svg-icon" />
               </div>
+              <h4>Paramedic Life-Link Access</h4>
+              <p>
+                Generates an instant, tokenized emergency link with real-time GPS coordinates, blood type, and medication allergies for emergency responders.
+              </p>
             </div>
-            <div className="problem-point">
-              <span className="point-icon">👨‍👩‍👧</span>
-              <div>
-                <h4>Multi-Caregiver Family Circle</h4>
-                <p>
-                  Synchronizes live vitals, daily medicine adherence, and battery health simultaneously across family members and healthcare providers.
-                </p>
+
+            <div className="problem-card">
+              <div className="problem-card-num">03</div>
+              <div className="problem-icon-wrap">
+                <FaUsers className="problem-svg-icon" />
               </div>
+              <h4>Multi-Caregiver Family Circle</h4>
+              <p>
+                Synchronizes live vitals, daily medicine adherence, and battery health simultaneously across family members and healthcare providers.
+              </p>
             </div>
           </div>
         </div>
