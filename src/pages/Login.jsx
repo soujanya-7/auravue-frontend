@@ -135,55 +135,50 @@ export default function Login() {
         title={`Login as ${role === 'patient' ? 'Patient' : 'Caregiver'}`}
         description="Securely access your AuraVue account to monitor health vitals or connect with caregivers."
       />
-      {/* --- Left Side: Unique Interactive Telemetry Showcase --- */}
+      {/* --- Left Side: Sleek Holographic Cardiogram Visual --- */}
       <div className="auth-side-branding">
         <div className="telemetry-showcase-container">
-          <div className="telemetry-badge-tag">
-            <span className="telemetry-pulse-dot" />
-            {role === 'patient' ? 'Wearer Safety Shield' : 'Clinical Telemetry Hub'}
-          </div>
-
           <h2 className="telemetry-headline">
             {role === 'patient'
-              ? 'Autonomous Protection, Wherever You Go'
-              : 'Real-Time Biometrics & Instant Emergency Dispatch'}
+              ? 'Autonomous Health & Safety Shield'
+              : 'Continuous Biometric Intelligence'}
           </h2>
 
           <p className="telemetry-subtext">
             {role === 'patient'
-              ? 'Wear your smart neckband to stay safely connected with family, automated fall detection, and one-touch emergency response.'
-              : 'Monitor multi-patient vitals, track live GPS coordinates, and receive sub-3s AI fall alarms on your central command hub.'}
+              ? 'Stay protected around the clock with hands-free fall detection and instant family emergency connection.'
+              : 'Monitor live patient vitals, detect cardiac anomalies, and coordinate rapid first-responder triage.'}
           </p>
 
-          {/* Live Telemetry Floating Metric Chips */}
-          <div className="telemetry-cards-stack">
-            <div className="auth-telemetry-chip chip-cardiac">
-              <div className="chip-icon-wrap icon-pulse">
-                ❤️
-              </div>
-              <div className="chip-info">
-                <div className="chip-label">Continuous Heart Rate</div>
-                <div className="chip-val">72 <small>BPM</small> • Stable</div>
-              </div>
+          {/* Animated SVG Cardiogram Waveform */}
+          <div className="ecg-visual-card">
+            <div className="ecg-header">
+              <span className="ecg-title">Live Biometric Stream</span>
+              <span className="ecg-status">100Hz Telemetry Active</span>
             </div>
-
-            <div className="auth-telemetry-chip chip-fall">
-              <div className="chip-icon-wrap icon-shield">
-                🛡️
-              </div>
-              <div className="chip-info">
-                <div className="chip-label">AI Fall & Anomaly Guard</div>
-                <div className="chip-val">&lt;3s Response Dispatched</div>
-              </div>
+            <div className="ecg-waveform-wrap">
+              <svg className="ecg-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
+                <path
+                  className="ecg-path"
+                  d="M0,60 L80,60 L95,60 L105,20 L115,100 L125,45 L135,75 L145,60 L230,60 L245,60 L255,15 L265,105 L275,40 L285,78 L295,60 L380,60 L395,60 L405,20 L415,100 L425,45 L435,75 L445,60 L500,60"
+                />
+              </svg>
+              <div className="ecg-scan-line" />
             </div>
-
-            <div className="auth-telemetry-chip chip-sync">
-              <div className="chip-icon-wrap icon-sync">
-                📡
+            <div className="ecg-footer">
+              <div className="ecg-metric">
+                <span className="metric-num">72</span>
+                <span className="metric-unit">BPM Heart Rate</span>
               </div>
-              <div className="chip-info">
-                <div className="chip-label">Paramedic Life-Link</div>
-                <div className="chip-val">Encrypted • 24/7 Active</div>
+              <div className="ecg-divider" />
+              <div className="ecg-metric">
+                <span className="metric-num">98%</span>
+                <span className="metric-unit">SpO2 Oxygen</span>
+              </div>
+              <div className="ecg-divider" />
+              <div className="ecg-metric">
+                <span className="metric-num">&lt;3s</span>
+                <span className="metric-unit">AI Fall Guard</span>
               </div>
             </div>
           </div>
@@ -200,14 +195,14 @@ export default function Login() {
               className={`role-tab-btn ${role === 'caregiver' ? 'active' : ''}`}
               onClick={() => { setRole('caregiver'); navigate('/login?role=caregiver', { replace: true }); }}
             >
-              👨‍⚕️ Caregiver
+              Caregiver
             </button>
             <button
               type="button"
               className={`role-tab-btn ${role === 'patient' ? 'active' : ''}`}
               onClick={() => { setRole('patient'); navigate('/login?role=patient', { replace: true }); }}
             >
-              👵 Patient
+              Patient
             </button>
           </div>
 

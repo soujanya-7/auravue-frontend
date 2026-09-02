@@ -330,10 +330,6 @@ function Home() {
       <section id="about" className="cta reveal">
         <div className="cta-glass-card">
           <div className="cta-glow-orb" />
-          
-          <div className="cta-badge-tag">
-            <span className="cta-pulse-dot" /> Next-Gen AI Telemetry
-          </div>
 
           <h2 className="cta-title">
             Protecting Lives with <span className="cta-cyan-text">Intelligent Care</span>

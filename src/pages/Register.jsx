@@ -114,14 +114,9 @@ export default function Register() {
         title={`Join AuraVue as ${role}`}
         description="Register for AuraVue to start intelligent health monitoring for yourself or your loved ones."
       />
-      {/* --- Left Side: Unique Interactive Telemetry Showcase --- */}
+      {/* --- Left Side: Sleek Holographic Cardiogram Visual --- */}
       <div className="auth-side-branding">
         <div className="telemetry-showcase-container">
-          <div className="telemetry-badge-tag">
-            <span className="telemetry-pulse-dot" />
-            {role === 'patient' ? 'Patient Safety Enrollment' : 'Caregiver Hub Setup'}
-          </div>
-
           <h2 className="telemetry-headline">
             {role === 'patient'
               ? 'Join the Autonomous Safety Network'
@@ -134,25 +129,35 @@ export default function Register() {
               : 'Create your centralized clinical monitoring workspace with instant emergency triage and family sharing.'}
           </p>
 
-          {/* Live Telemetry Floating Metric Chips */}
-          <div className="telemetry-cards-stack">
-            <div className="auth-telemetry-chip chip-cardiac">
-              <div className="chip-icon-wrap icon-pulse">
-                ❤️
-              </div>
-              <div className="chip-info">
-                <div className="chip-label">Continuous Monitoring</div>
-                <div className="chip-val">100Hz Real-Time Telemetry</div>
-              </div>
+          {/* Animated SVG Cardiogram Waveform */}
+          <div className="ecg-visual-card">
+            <div className="ecg-header">
+              <span className="ecg-title">Live Biometric Stream</span>
+              <span className="ecg-status">100Hz Telemetry Active</span>
             </div>
-
-            <div className="auth-telemetry-chip chip-fall">
-              <div className="chip-icon-wrap icon-shield">
-                🛡️
+            <div className="ecg-waveform-wrap">
+              <svg className="ecg-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
+                <path
+                  className="ecg-path"
+                  d="M0,60 L80,60 L95,60 L105,20 L115,100 L125,45 L135,75 L145,60 L230,60 L245,60 L255,15 L265,105 L275,40 L285,78 L295,60 L380,60 L395,60 L405,20 L415,100 L425,45 L435,75 L445,60 L500,60"
+                />
+              </svg>
+              <div className="ecg-scan-line" />
+            </div>
+            <div className="ecg-footer">
+              <div className="ecg-metric">
+                <span className="metric-num">72</span>
+                <span className="metric-unit">BPM Heart Rate</span>
               </div>
-              <div className="chip-info">
-                <div className="chip-label">Autonomous Safety</div>
-                <div className="chip-val">Zero-Button Emergency Protocol</div>
+              <div className="ecg-divider" />
+              <div className="ecg-metric">
+                <span className="metric-num">98%</span>
+                <span className="metric-unit">SpO2 Oxygen</span>
+              </div>
+              <div className="ecg-divider" />
+              <div className="ecg-metric">
+                <span className="metric-num">&lt;3s</span>
+                <span className="metric-unit">AI Fall Guard</span>
               </div>
             </div>
           </div>
@@ -168,13 +173,13 @@ export default function Register() {
               to="/register?role=caregiver"
               className={`role-tab-btn ${role === 'caregiver' ? 'active' : ''}`}
             >
-              👨‍⚕️ Caregiver
+              Caregiver
             </Link>
             <Link
               to="/register?role=patient"
               className={`role-tab-btn ${role === 'patient' ? 'active' : ''}`}
             >
-              👵 Patient
+              Patient
             </Link>
           </div>
 
