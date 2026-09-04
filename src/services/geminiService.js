@@ -47,28 +47,22 @@ export async function analyzePatientHealthWithAi({
     try {
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
       const prompt = `
-        You are an expert Geriatric Cardiologist & Health AI for the AuraVue eldercare system.
-        Evaluate this patient's live telemetry:
+        You are an AI assistant for the AuraVue health monitor.
+        Evaluate this patient's live vitals:
         - Patient Name: ${patientName}
-        - Heart Rate: ${pulse} BPM (Normal range: 60-100 BPM)
-        - Oxygen Saturation (SpO2): ${spO2}% (Normal: >=95%)
-        - Body Temperature: ${temp}°C (Normal: 36.1 - 37.2°C)
-        - Blood Pressure: ${bp} mmHg (Normal: ~120/80)
-        - Cardiovascular Stability Score: ${stability}%
+        - Heart Rate: ${pulse} BPM
+        - Oxygen Saturation (SpO2): ${spO2}%
+        - Body Temperature: ${temp}°C
+        - Blood Pressure: ${bp} mmHg
+        - Health Stability Score: ${stability}%
         - Activity State: ${activityLevel}
-        - Active Emergency Event: ${isEmergency ? `YES - ${emergencyType || 'SOS/Fall Alert'}` : 'None'}
-        - Scheduled Medications: ${medications.map(m => m.name || m.title || 'Meds').join(', ') || 'None reported'}
+        - Emergency Event: ${isEmergency ? `YES (${emergencyType || 'Fall/SOS'})` : 'None'}
 
-        Respond ONLY with a valid JSON object matching this exact schema:
+        Respond ONLY with a JSON object in this exact format using SIMPLE, EASY-TO-UNDERSTAND language:
         {
-          "summary": "2-sentence clinical assessment of cardiovascular & physiological state",
-          "riskLevel": "Optimal" | "Moderate Concern" | "Critical Alert",
-          "confidenceScore": 96,
-          "recommendations": [
-            "Specific actionable recommendation 1 for caregiver",
-            "Specific actionable recommendation 2 for caregiver",
-            "Specific actionable recommendation 3 for caregiver"
-          ]
+          "summary": "1 clear, simple sentence explaining how the patient is doing in plain English",
+          "riskLevel": "All Normal" | "Attention Needed" | "Emergency Alert",
+          "confidenceScore": 98
         }
       `;
 
@@ -131,64 +125,51 @@ function generateClinicalHeuristicAssessment({
   temp,
   stability,
   activityLevel,
-  medications,
   isEmergency,
   emergencyType
 }) {
-  let riskLevel = 'Optimal';
-  const recommendations = [];
+  let riskLevel = 'All Normal';
   let summary = '';
 
   if (isEmergency) {
-    riskLevel = 'Critical Alert';
-    summary = `Emergency event (${emergencyType || 'Fall / SOS'}) is currently active for ${patientName}. Caregiver action is required.`;
-    recommendations.push('Initiate phone or 2-way voice channel with patient.');
-    recommendations.push('Inspect live GPS map below for exact coordinates.');
-    recommendations.push('Click "Resolve Alert" once the patient is confirmed safe.');
+    riskLevel = 'Emergency Alert';
+    summary = `A ${emergencyType || 'fall'} alert was detected for ${patientName}. Please check on them.`;
     return {
       summary,
       riskLevel,
       confidenceScore: 99,
-      recommendations,
-      source: 'AuraVue AI Clinical Engine v2.4',
+      source: 'AuraVue AI Protection',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
   }
 
-  const isTachycardia = pulse > 105;
-  const isBradycardia = pulse < 55;
-  const isLowSpO2 = spO2 < 94;
-  const isFever = temp > 37.8;
-  const isHypothermia = temp < 35.5;
+  const isHighPulse = pulse > 100;
+  const isLowPulse = pulse < 60 && pulse > 0;
+  const isLowSpO2 = spO2 < 95;
+  const isFever = Number(temp) > 37.5;
 
-  if (isLowSpO2 || (isTachycardia && stability < 65) || isHypothermia) {
-    riskLevel = 'Critical Alert';
-    summary = `Critical vital anomaly detected for ${patientName}. SpO₂ (${spO2}%) or heart rate (${pulse} BPM) indicates acute physiological distress.`;
-    recommendations.push('Initiate voice channel or video check-in immediately.');
-    recommendations.push('Prepare emergency dispatcher or dispatch paramedic life-link.');
-    recommendations.push('Verify oxygen supply and check for room ventilation.');
-  } else if (isTachycardia || isBradycardia || isFever || stability < 75) {
-    riskLevel = 'Moderate Concern';
-    summary = `Mild arrhythmia or thermal variance detected for ${patientName}. Pulse is ${pulse} BPM with cardiovascular stability at ${stability}%.`;
-    recommendations.push('Ensure patient is seated and well hydrated with room-temperature water.');
-    recommendations.push('Verify if scheduled daily medications were taken on time.');
-    recommendations.push('Monitor ECG waveform stability for next 15 minutes.');
+  if (isLowSpO2 || (isHighPulse && stability < 70)) {
+    riskLevel = 'Attention Needed';
+    summary = `${patientName}'s heart rate (${pulse} BPM) or oxygen (${spO2}%) is outside the normal range.`;
+  } else if (isHighPulse) {
+    riskLevel = 'Attention Needed';
+    summary = `${patientName}'s heart rate is elevated at ${pulse} BPM. Recommend resting.`;
+  } else if (isLowPulse) {
+    riskLevel = 'Attention Needed';
+    summary = `${patientName}'s heart rate is lower than average at ${pulse} BPM.`;
+  } else if (isFever) {
+    riskLevel = 'Attention Needed';
+    summary = `Elevated body temperature (${temp}°C) detected for ${patientName}.`;
   } else {
-    riskLevel = 'Optimal';
-    summary = `${patientName}'s vital signs are within optimal geriatric baseline limits. Heart rhythm and oxygen saturation demonstrate healthy stability.`;
-    recommendations.push('Maintain regular daily hydration and moderate mobility routine.');
-    recommendations.push('Ensure neckband battery remains charged above 20% for continuous overnight monitoring.');
-    if (medications?.length > 0) {
-      recommendations.push(`Keep daily dosage schedule active for ${medications[0]?.name || 'prescribed medicines'}.`);
-    }
+    riskLevel = 'All Normal';
+    summary = `${patientName}'s heart rate and oxygen levels are steady and in a healthy range.`;
   }
 
   return {
     summary,
     riskLevel,
-    confidenceScore: 95,
-    recommendations,
-    source: 'AuraVue AI Clinical Engine v2.4',
+    confidenceScore: 96,
+    source: 'AuraVue AI Protection',
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   };
 }
