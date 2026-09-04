@@ -456,7 +456,7 @@ const Dashboard = () => {
 
       <div className="dashboard-v2" style={{ maxWidth: '1400px', margin: '0 auto', padding: '7rem 1.5rem 2rem' }}>
         {/* ── TOP STATUS & PATIENT SWITCHER BAR ── */}
-        <div className="top-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div className="top-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem', position: 'relative', overflow: 'visible', zIndex: 100 }}>
           <div>
             <h1 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 800, color: '#ffffff' }}>
               Caregiver <span style={{ color: '#00e6e6' }}>Command Center</span>
@@ -514,7 +514,7 @@ const Dashboard = () => {
             </button>
 
             {/* Notification Bell Dropdown */}
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: 'relative', zIndex: 1000 }}>
               <button
                 onClick={() => {
                   setShowAlerts(!showAlerts);
@@ -562,17 +562,19 @@ const Dashboard = () => {
                   className="glass-card notif-dropdown"
                   style={{
                     position: 'absolute',
-                    top: '48px',
+                    top: '52px',
                     right: 0,
-                    width: '320px',
+                    width: '340px',
                     borderRadius: '18px',
-                    background: 'rgba(10, 22, 34, 0.95)',
-                    backdropFilter: 'blur(16px)',
-                    border: '1px solid rgba(0, 230, 230, 0.25)',
-                    boxShadow: '0 16px 40px rgba(0, 0, 0, 0.6)',
-                    zIndex: 1000,
-                    padding: '1rem',
-                    animation: 'toastSlideIn 0.2s ease'
+                    background: 'rgba(10, 22, 34, 0.98)',
+                    backdropFilter: 'blur(24px)',
+                    WebkitBackdropFilter: 'blur(24px)',
+                    border: '1px solid rgba(0, 230, 230, 0.3)',
+                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 230, 230, 0.15)',
+                    zIndex: 2000,
+                    padding: '1.2rem',
+                    animation: 'toastSlideIn 0.2s ease',
+                    overflow: 'visible'
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.5rem' }}>

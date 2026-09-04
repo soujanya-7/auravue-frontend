@@ -73,7 +73,8 @@ html {
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 100;
 }
 
 .top-bar::before {
