@@ -119,42 +119,14 @@ const LivePulseVisualizer = ({
         overflow: 'hidden'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem' }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
-            <span
-              style={{
-                width: '10px',
-                height: '10px',
-                borderRadius: '50%',
-                backgroundColor: status.color,
-                boxShadow: `0 0 10px ${status.color}`,
-                animation: 'pulseGlow 2s infinite'
-              }}
-            />
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(0, 230, 230, 0.8)' }}>
-              {isPatientView ? 'YOUR LIVE HEART RATE' : `REAL-TIME VITALS • ${patientName}`}
-            </span>
-          </div>
-          <h2 style={{ fontSize: '1.6rem', margin: 0, fontWeight: 700, color: '#ffffff' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(0, 230, 230, 0.8)', display: 'block', marginBottom: '0.2rem' }}>
+            {isPatientView ? 'Your Live Heart Rate' : `Real-Time Vitals — ${patientName}`}
+          </span>
+          <h2 style={{ fontSize: '1.5rem', margin: 0, fontWeight: 700, color: '#ffffff' }}>
             {status.label}
           </h2>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-          <span
-            style={{
-              padding: '0.4rem 0.8rem',
-              borderRadius: '20px',
-              fontSize: '0.8rem',
-              fontWeight: 600,
-              background: `${status.color}1a`,
-              color: status.color,
-              border: `1px solid ${status.color}40`
-            }}
-          >
-            Threshold: {minThreshold}–{maxThreshold} BPM
-          </span>
         </div>
       </div>
 

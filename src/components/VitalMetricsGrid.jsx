@@ -92,21 +92,8 @@ const VitalMetricsGrid = ({
             transition: 'transform 0.25s ease, border-color 0.25s ease'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
             <span style={{ fontSize: '1.4rem' }}>{m.icon}</span>
-            <span
-              style={{
-                fontSize: '0.7rem',
-                fontWeight: 700,
-                padding: '0.2rem 0.55rem',
-                borderRadius: '12px',
-                background: `${m.badgeColor}20`,
-                color: m.badgeColor,
-                border: `1px solid ${m.badgeColor}40`
-              }}
-            >
-              {m.status}
-            </span>
           </div>
 
           <div>

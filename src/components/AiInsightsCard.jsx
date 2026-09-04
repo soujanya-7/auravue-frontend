@@ -6,8 +6,7 @@ import {
   FaHeartbeat,
   FaWalking,
   FaSyncAlt,
-  FaShieldAlt,
-  FaNotesMedical
+  FaShieldAlt
 } from 'react-icons/fa';
 import { analyzePatientHealthWithAi } from '../services/geminiService';
 
@@ -112,63 +111,29 @@ const AiInsightsCard = ({
       {/* Main Status Headline */}
       <div
         style={{
-          padding: '1.1rem',
+          padding: '1rem 1.1rem',
           borderRadius: '16px',
           background: `${statusColor}12`,
-          border: `1px solid ${statusColor}35`,
+          border: `1px solid ${statusColor}30`,
           display: 'flex',
           alignItems: 'flex-start',
-          gap: '0.85rem'
+          gap: '0.8rem'
         }}
       >
         {isHealthy ? (
-          <FaCheckCircle style={{ color: statusColor, fontSize: '1.4rem', flexShrink: 0, marginTop: '2px' }} />
+          <FaCheckCircle style={{ color: statusColor, fontSize: '1.2rem', flexShrink: 0, marginTop: '2px' }} />
         ) : (
-          <FaExclamationTriangle style={{ color: statusColor, fontSize: '1.4rem', flexShrink: 0, marginTop: '2px' }} />
+          <FaExclamationTriangle style={{ color: statusColor, fontSize: '1.2rem', flexShrink: 0, marginTop: '2px' }} />
         )}
         <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
-            <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary, #ffffff)' }}>
-              {assessment?.riskLevel || (isHealthy ? 'Optimal Cardiovascular Stability' : 'Irregular Variance Detected')}
-            </h4>
-            {assessment?.confidenceScore && (
-              <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>
-                {assessment.confidenceScore}% Confidence
-              </span>
-            )}
-          </div>
-          <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary, rgba(255, 255, 255, 0.8))', lineHeight: 1.5 }}>
-            {assessment?.summary || anomalyText || (isHealthy ? 'Pulse & HRV stay within standard baseline parameters.' : 'Pulse fluctuation exceeds standard thresholds.')}
+          <h4 style={{ margin: '0 0 0.25rem', fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary, #ffffff)' }}>
+            {assessment?.riskLevel || (isHealthy ? 'Optimal Cardiovascular Stability' : 'Irregular Variance Detected')}
+          </h4>
+          <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary, rgba(255, 255, 255, 0.8))', lineHeight: 1.45 }}>
+            {assessment?.summary || anomalyText || (isHealthy ? 'Pulse and telemetry metrics stay within standard baseline parameters.' : 'Pulse fluctuation exceeds standard thresholds.')}
           </p>
         </div>
       </div>
-
-      {/* AI Caregiver Action Recommendations */}
-      {assessment?.recommendations?.length > 0 && (
-        <div
-          style={{
-            padding: '0.9rem 1.1rem',
-            borderRadius: '14px',
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem'
-          }}
-        >
-          <span style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#00e6e6', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <FaNotesMedical /> Caregiver Action Protocol
-          </span>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            {assessment.recommendations.map((rec, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-secondary, rgba(255, 255, 255, 0.75))', lineHeight: 1.4 }}>
-                <span style={{ color: '#00e699', fontWeight: 700 }}>•</span>
-                <span>{rec}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Metrics Breakdown */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>

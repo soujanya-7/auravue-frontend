@@ -20,7 +20,6 @@ import {
   FaPaperPlane,
   FaComments,
   FaSyringe,
-  FaMapMarkerAlt,
   FaUserFriends
 } from 'react-icons/fa';
 import { MdEmergency } from 'react-icons/md';
@@ -459,11 +458,11 @@ const Dashboard = () => {
         {/* ── TOP STATUS & PATIENT SWITCHER BAR ── */}
         <div className="top-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>
-            <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              AuraVue <span style={{ color: '#00e6e6' }}>Command Center</span>
+            <h1 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 800, color: '#ffffff' }}>
+              Caregiver <span style={{ color: '#00e6e6' }}>Command Center</span>
             </h1>
             <p style={{ margin: '0.2rem 0 0', fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-              Logged in as <b>{caregiverName}</b>
+              Logged in as <b>{caregiverName}</b> • Monitoring <b>{patientName}</b>
             </p>
           </div>
 
@@ -699,7 +698,7 @@ const Dashboard = () => {
             <div
               className="glass-card quick-actions-panel"
               style={{
-                padding: '1.6rem',
+                padding: '1.4rem',
                 borderRadius: '24px',
                 background: 'var(--glass-bg, rgba(14, 32, 48, 0.65))',
                 border: '1px solid var(--glass-border, rgba(0, 230, 230, 0.14))',
@@ -709,142 +708,118 @@ const Dashboard = () => {
                 gap: '0.8rem'
               }}
             >
-              <h3 style={{ margin: '0 0 0.4rem', fontSize: '1.1rem', fontWeight: 700, color: '#ffffff' }}>
-                Quick Response Hub
+              <h3 style={{ margin: '0 0 0.2rem', fontSize: '1.05rem', fontWeight: 700, color: '#ffffff' }}>
+                Care Actions
               </h3>
 
-              <button
-                className="action-btn"
-                onClick={handleCallPatient}
-                style={{
-                  padding: '0.85rem 1.2rem',
-                  borderRadius: '14px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  width: '100%',
-                  justifyContent: 'flex-start',
-                  transition: 'all 0.2s'
-                }}
-              >
-                <span style={{ color: '#00e699', fontSize: '1.1rem' }}><FaPhone /></span> Call {patientName}
-              </button>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
+                <button
+                  className="action-btn"
+                  onClick={handleCallPatient}
+                  style={{
+                    padding: '0.75rem 0.9rem',
+                    borderRadius: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    justifyContent: 'center',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <span style={{ color: '#00e699' }}><FaPhone /></span> Call
+                </button>
 
-              <button
-                className="action-btn"
-                onClick={handleSMSPatient}
-                style={{
-                  padding: '0.85rem 1.2rem',
-                  borderRadius: '14px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  width: '100%',
-                  justifyContent: 'flex-start'
-                }}
-              >
-                <span style={{ color: '#00e6e6', fontSize: '1.1rem' }}><FaPaperPlane /></span> Quick SMS Check-In
-              </button>
+                <button
+                  className="action-btn"
+                  onClick={handleSMSPatient}
+                  style={{
+                    padding: '0.75rem 0.9rem',
+                    borderRadius: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <span style={{ color: '#00e6e6' }}><FaPaperPlane /></span> SMS
+                </button>
 
-              <button
-                className="action-btn"
-                onClick={() => setShowMessages(true)}
-                style={{
-                  padding: '0.85rem 1.2rem',
-                  borderRadius: '14px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  width: '100%',
-                  justifyContent: 'flex-start'
-                }}
-              >
-                <span style={{ color: '#c87eff', fontSize: '1.1rem' }}><FaComments /></span> Encrypted Message Hub
-              </button>
+                <button
+                  className="action-btn"
+                  onClick={() => setShowMessages(true)}
+                  style={{
+                    padding: '0.75rem 0.9rem',
+                    borderRadius: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <span style={{ color: '#c87eff' }}><FaComments /></span> Messages
+                </button>
 
-              <button
-                className="action-btn"
-                onClick={() => setShowMedModal(true)}
-                style={{
-                  padding: '0.85rem 1.2rem',
-                  borderRadius: '14px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  width: '100%',
-                  justifyContent: 'flex-start'
-                }}
-              >
-                <span style={{ color: '#ffb703', fontSize: '1.1rem' }}><FaSyringe /></span> Log Medication Dose
-              </button>
-
-              <button
-                className="action-btn"
-                onClick={() => mapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
-                style={{
-                  padding: '0.85rem 1.2rem',
-                  borderRadius: '14px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  width: '100%',
-                  justifyContent: 'flex-start'
-                }}
-              >
-                <span style={{ color: '#00e6e6', fontSize: '1.1rem' }}><FaMapMarkerAlt /></span> Live Location Pin
-              </button>
+                <button
+                  className="action-btn"
+                  onClick={() => setShowMedModal(true)}
+                  style={{
+                    padding: '0.75rem 0.9rem',
+                    borderRadius: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <span style={{ color: '#ffb703' }}><FaSyringe /></span> Meds
+                </button>
+              </div>
 
               <button
                 className="action-btn emergency"
                 onClick={handleTriggerSOS}
                 style={{
-                  marginTop: '0.5rem',
-                  padding: '0.95rem 1.2rem',
-                  borderRadius: '14px',
+                  marginTop: '0.3rem',
+                  padding: '0.85rem 1.1rem',
+                  borderRadius: '12px',
                   background: 'linear-gradient(135deg, rgba(255, 42, 95, 0.8), rgba(200, 20, 60, 0.9))',
                   border: '1px solid #ff2a5f',
                   color: '#ffffff',
-                  fontWeight: 800,
-                  fontSize: '0.95rem',
+                  fontWeight: 700,
+                  fontSize: '0.9rem',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '0.6rem',
-                  boxShadow: '0 8px 25px rgba(255, 42, 95, 0.4)'
+                  gap: '0.5rem',
+                  boxShadow: '0 6px 20px rgba(255, 42, 95, 0.35)'
                 }}
               >
-                <MdEmergency style={{ fontSize: '1.3rem' }} /> Dispatch Emergency SOS
+                <MdEmergency style={{ fontSize: '1.2rem' }} /> Dispatch Emergency SOS
               </button>
             </div>
           </div>

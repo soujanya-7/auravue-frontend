@@ -305,23 +305,9 @@ const PatientDashboard = () => {
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-            <span
-              style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '20px',
-                background: 'rgba(0, 230, 153, 0.12)',
-                color: '#00e699',
-                border: '1px solid rgba(0, 230, 153, 0.3)',
-                fontSize: '0.85rem',
-                fontWeight: 700,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
-            >
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00e699', animation: 'pulseGlow 2s infinite' }} />
-              24/7 AI Shield Active
+          <div>
+            <span style={{ fontSize: '0.85rem', color: '#00e699', fontWeight: 600 }}>
+              AI Active Shield
             </span>
           </div>
         </div>
