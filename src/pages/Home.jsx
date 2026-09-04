@@ -188,17 +188,13 @@ function Home() {
         </svg>
       </div>
 
-      {/* 💻 Tech Stack Badges */}
+      {/* 💻 Technology & Platform Highlights */}
       <section className="tech-badges">
         <div className="tech-badges-track">
           <span className="tech-badge">🧠 Powered by AI</span>
-          <span className="tech-dot">•</span>
           <span className="tech-badge">📡 IoT Connected</span>
-          <span className="tech-dot">•</span>
           <span className="tech-badge">☁️ Cloud Synced</span>
-          <span className="tech-dot">•</span>
           <span className="tech-badge">🔒 End-to-End Encrypted</span>
-          <span className="tech-dot">•</span>
           <span className="tech-badge">📱 Cross-Platform</span>
         </div>
       </section>
