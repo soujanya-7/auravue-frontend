@@ -1,14 +1,11 @@
 import React from 'react';
-import { FaHeartbeat, FaThermometerHalf, FaTint, FaLungs, FaShieldAlt } from 'react-icons/fa';
+import { FaHeartbeat, FaThermometerHalf, FaTint, FaLungs } from 'react-icons/fa';
 
 const VitalMetricsGrid = ({
   pulse = 0,
   temp = '36.6',
   bp = '120/80',
-  spo2 = 98,
-  fallStatus = 'Active & Safe',
-  isFallAlert = false,
-  onSimulateFall = null
+  spo2 = 98
 }) => {
   const metrics = [
     {
@@ -16,47 +13,28 @@ const VitalMetricsGrid = ({
       label: 'Heart Rate',
       value: pulse || '—',
       unit: 'BPM',
-      icon: <FaHeartbeat style={{ color: '#ff4d6d' }} />,
-      status: pulse > 100 ? 'Elevated' : pulse < 60 && pulse > 0 ? 'Low' : 'Optimal',
-      badgeColor: pulse > 100 ? '#ffb703' : pulse < 60 && pulse > 0 ? '#ff4d6d' : '#00e699'
+      icon: <FaHeartbeat style={{ color: '#ff4d6d' }} />
     },
     {
       id: 'temp',
       label: 'Body Temp',
       value: temp || '36.6',
       unit: '°C',
-      icon: <FaThermometerHalf style={{ color: '#ff9f40' }} />,
-      status: Number(temp) > 37.5 ? 'Fever' : 'Normal',
-      badgeColor: Number(temp) > 37.5 ? '#ffb703' : '#00e699'
+      icon: <FaThermometerHalf style={{ color: '#ff9f40' }} />
     },
     {
       id: 'bp',
       label: 'Blood Pressure',
       value: bp || '120/80',
       unit: 'mmHg',
-      icon: <FaTint style={{ color: '#c87eff' }} />,
-      status: 'Normal Systolic',
-      badgeColor: '#00e699'
+      icon: <FaTint style={{ color: '#c87eff' }} />
     },
     {
       id: 'spo2',
       label: 'Oxygen Saturation',
       value: `${spo2}%`,
       unit: 'SpO₂',
-      icon: <FaLungs style={{ color: '#00e6e6' }} />,
-      status: spo2 >= 95 ? 'Healthy Range' : 'Attention',
-      badgeColor: spo2 >= 95 ? '#00e699' : '#ff4d6d'
-    },
-    {
-      id: 'fall-sensor',
-      label: 'Fall Detection AI',
-      value: isFallAlert ? 'FALL DETECTED' : fallStatus,
-      unit: '6-Axis IMU',
-      icon: <FaShieldAlt style={{ color: isFallAlert ? '#ff2a5f' : '#00e6e6' }} />,
-      status: isFallAlert ? 'Emergency' : 'Calibrated',
-      badgeColor: isFallAlert ? '#ff2a5f' : '#00e699',
-      isAlert: isFallAlert,
-      action: onSimulateFall
+      icon: <FaLungs style={{ color: '#00e6e6' }} />
     }
   ];
 
@@ -64,7 +42,7 @@ const VitalMetricsGrid = ({
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
         gap: '1rem',
         width: '100%'
       }}
@@ -116,27 +94,6 @@ const VitalMetricsGrid = ({
               </span>
             </div>
           </div>
-
-          {m.action && (
-            <button
-              onClick={m.action}
-              style={{
-                marginTop: '0.3rem',
-                padding: '0.4rem 0.8rem',
-                borderRadius: '8px',
-                border: '1px dashed rgba(255, 42, 95, 0.5)',
-                background: 'rgba(255, 42, 95, 0.1)',
-                color: '#ff4d6d',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                width: '100%',
-                justifyContent: 'center'
-              }}
-            >
-              ⚡ Test Fall Alert
-            </button>
-          )}
         </div>
       ))}
     </div>
