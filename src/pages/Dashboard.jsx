@@ -454,7 +454,7 @@ const Dashboard = () => {
         description="Monitor real-time heart rate, detect falls, track live GPS location, and manage care for your connected loved ones."
       />
 
-      <div className="dashboard-v2" style={{ maxWidth: '1400px', margin: '0 auto', padding: '1.5rem' }}>
+      <div className="dashboard-v2" style={{ maxWidth: '1400px', margin: '0 auto', padding: '7rem 1.5rem 2rem' }}>
         {/* ── TOP STATUS & PATIENT SWITCHER BAR ── */}
         <div className="top-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>

@@ -293,7 +293,7 @@ const PatientDashboard = () => {
         description="View your real-time heart rate, check medication schedules, and stay connected with your caregiver."
       />
 
-      <div className="dashboard-v2" style={{ maxWidth: '1300px', margin: '0 auto', padding: '1.5rem' }}>
+      <div className="dashboard-v2" style={{ maxWidth: '1300px', margin: '0 auto', padding: '7rem 1.5rem 2rem' }}>
         {/* ── TOP STATUS BAR ── */}
         <div className="top-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>
