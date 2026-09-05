@@ -45,6 +45,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   min-height: 100vh;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 /* Accessibility Focus States */
